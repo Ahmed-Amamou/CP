@@ -15,45 +15,31 @@ const ll N = 5e5 + 20, MOD = 1e9 + 7;
 ll n, tab[N], dp[N][2];
 vector<int> adj[N];
 bool vis[N][2];
-unsigned nChoosek( unsigned n, unsigned k )
-{
-    if (k > n) return 0;
-    if (k * 2 > n) k = n-k;
-    if (k == 0) return 1;
 
-    int result = n;
-    for( int i = 2; i <= k; ++i ) {
-        result *= (n-i+1);
-        result /= i;
-    }
-    return result;
-}
 
 
 void solve()
 {
-    ll diag1[2001] = {};
-    ll diag2[2001] = {};
+    unordered_map<int, int> diag1, diag2;
     int t;
     cin >> t;
     for (int i = 0; i < t; ++i)
     {
         int x, y;
         cin >> x >> y;
-        diag1[max(x, y) - min(x, y)]++;
+        diag1[x-y]++;
         diag2[x + y]++;
     }
     ll res = 0;
-    for (int i = 0; i < 2001; i++)
+    for (auto it = diag1.begin(); it != diag1.end(); ++it)
     {
-        if (diag1[i] >= 3)
-        {
-            res += nChoosek(diag1[i],2);
-        }
-        if (diag2[i] >= 3)
-        {
-            res += nChoosek(diag2[i],2);
-        }    
+        int n = it->second;
+        res += n * (n - 1) / 2;
+    }
+    for (auto it = diag2.begin(); it != diag2.end(); ++it)
+    {
+        int n = it->second;
+        res += n * (n - 1) / 2;
     }
     cout << res << endl;
     
