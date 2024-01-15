@@ -17,24 +17,39 @@ vector<int> adj[N];
 bool vis[N][2];
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
+int sumOfDigits(string number)
+{
+    int sum = 0;
+    for (char digit : number)
+    {
+        sum += digit - '0';
+    }
+    return sum;
+}
 
 void solve()
-{   vector<pair<int,int>> v ; 
-    for (int i = 0; i < 4; i++)
+{
+    string n;
+    cin >> n;
+    int count = 1;
+    if (n.length() > 1)
     {
-        int x,y;
-        cin >> x >> y;
-        v.push_back(make_pair(x,y));
+        while (true)
+        {
+            if (sumOfDigits(n) >= 10)
+            {
+                count++;
+                n = to_string(sumOfDigits(n));
+            }
+            else
+                break;
+        }
+        {
+            cout << count << endl;
+        }
     }
-    int x = v[0].first;
-    int y = v[0].second;
-    for (int i = 1; i < v.size(); i++)
-    {
-        if (v[i].first == x) {cout << (y - v[i].second)*(y - v[i].second) << endl;
-        break;}
-    }
-    
-    
+    else
+        cout << 0 << endl;
 }
 
 signed main()
@@ -42,8 +57,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-      cin >> tt;
-      while (tt--)
+    //   cin >> tt;
+    //   while (tt--)
     solve();
     return 0;
 }

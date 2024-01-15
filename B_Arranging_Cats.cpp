@@ -19,22 +19,21 @@ int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
-{   vector<pair<int,int>> v ; 
-    for (int i = 0; i < 4; i++)
+{
+    ll n;
+    cin >> n;
+    string s, f;
+    cin >> s;
+    cin >> f;
+    int count1 = 0, count2 = 0;
+    for (int i = 0; i < n; i++)
     {
-        int x,y;
-        cin >> x >> y;
-        v.push_back(make_pair(x,y));
+        if (s[i] == '0' && f[i] == '1')
+            count1++;
+        if (s[i] == '1' && f[i] == '0')
+            count2++;
     }
-    int x = v[0].first;
-    int y = v[0].second;
-    for (int i = 1; i < v.size(); i++)
-    {
-        if (v[i].first == x) {cout << (y - v[i].second)*(y - v[i].second) << endl;
-        break;}
-    }
-    
-    
+    cout << max(count1, count2) << endl;
 }
 
 signed main()
@@ -42,8 +41,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-      cin >> tt;
-      while (tt--)
-    solve();
+    cin >> tt;
+    while (tt--)
+        solve();
     return 0;
 }

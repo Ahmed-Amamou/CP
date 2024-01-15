@@ -17,24 +17,40 @@ vector<int> adj[N];
 bool vis[N][2];
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
+ll calculate_sum_of_digits(ll n)
+{
+    ll sum = n % 10;
+    ll k = 100;
+    while (n / k != 0)
+    {
+        sum += (n % k) / (k / 10);
+        k *= 10;
+    }
 
+    return sum += (n % k) / (k / 10);
+}
+bool is_prime(int n)
+{
+    int sum = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        if (n % i == 0)
+            sum++;
+    }
+    if (sum > 2)
+        return false;
+    else
+        return true;
+}
 void solve()
-{   vector<pair<int,int>> v ; 
-    for (int i = 0; i < 4; i++)
+{
+    ll n;
+
+    // we want to know if the divisors of n are odd or even
+    while (true)
     {
-        int x,y;
-        cin >> x >> y;
-        v.push_back(make_pair(x,y));
+        
     }
-    int x = v[0].first;
-    int y = v[0].second;
-    for (int i = 1; i < v.size(); i++)
-    {
-        if (v[i].first == x) {cout << (y - v[i].second)*(y - v[i].second) << endl;
-        break;}
-    }
-    
-    
 }
 
 signed main()
@@ -42,8 +58,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-      cin >> tt;
-      while (tt--)
+    //   cin >> tt;
+    //   while (tt--)
     solve();
     return 0;
 }

@@ -19,22 +19,28 @@ int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
-{   vector<pair<int,int>> v ; 
-    for (int i = 0; i < 4; i++)
+{
+    ll n;
+    cin >> n;
+    ll a[n];
+    for (int i = 0; i < n; i++)
     {
-        int x,y;
-        cin >> x >> y;
-        v.push_back(make_pair(x,y));
+        cin >> a[i];
     }
-    int x = v[0].first;
-    int y = v[0].second;
-    for (int i = 1; i < v.size(); i++)
+    for (int i = 0; i < n; i++)
     {
-        if (v[i].first == x) {cout << (y - v[i].second)*(y - v[i].second) << endl;
-        break;}
+        if (i == 0)
+        {
+            cout << abs(a[i + 1] - a[i]) << " " << abs(a[n - 1] - a[i]) << endl;
+            continue;
+        }
+        if ( i == n-1)
+        {
+            cout << abs(a[i] - a[i-1]) << " " <<abs(a[i] - a[0]) << endl;
+            continue;
+        }
+        cout << min(abs(a[i]-a[i+1]),abs(a[i]-a[i-1]))<<" "<< max(abs(a[n-1]-a[i]),abs(a[i] - a[0]))<<endl;
     }
-    
-    
 }
 
 signed main()
@@ -42,8 +48,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-      cin >> tt;
-      while (tt--)
+    //   cin >> tt;
+    //   while (tt--)
     solve();
     return 0;
 }
