@@ -35,86 +35,79 @@ const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
-double euclideanDistance(pair<double, double> p1, pair<double, double> p2)
+pair<ll, ll> countContiguousEquals(const vector<ll> &vec)
 {
-    double xDiff = p2.first - p1.first;
-    double yDiff = p2.second - p1.second;
-    return sqrt(xDiff * xDiff + yDiff * yDiff);
+    ll pointer1 = 0, pointer2 = vec.size() - 1;
+    // Count contiguous equals from the left
+    for (int i = 0; i < vec.size(); i++)
+    {
+        if (vec[i] == vec[i - 1])
+        {
+            pointer1++;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    // Count contiguous equals from the right
+    for (int i = vec.size() - 1; i >= 0; i--)
+    {
+        if (vec[i] == vec[i + 1])
+        {
+            pointer2--;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    return make_pair(pointer1, pointer2);
 }
 
 void solve()
 {
-    ll n, m, x;
-    cin >> n >> m >> x;
-    vector<pair<double, double>> S_positions;
-    map<char, vector<pair<double, double>>> keyboard;
-    map<char, double> best_distance_to_key;
-    for (double i = 0; i < n; i++)
+    ll n;
+    cin >> n;
+    vector<ll> a(n);
+    for (int i = 0; i < n; i++)
     {
-        for (double j = 0; j < m; j++)
+        cin >> a[i];
+    }
+    bool flag = false;
+    for (int i = 1; i < n; i++)
+    {
+        if (a[i] != a[0])
         {
-            char key;
-            cin >> key;
-            if (key == 'S')
-                S_positions.push_back(make_pair(i, j));
-            else
-            {
-                if (keyboard.find(key) != keyboard.end())
-                {
-                    keyboard[key].push_back(make_pair(i, j));
-                }
-                else
-                {
-                    vector<pair<double, double>> v;
-                    v.push_back(make_pair(i, j));
-                    keyboard[key] = v;
-                }
-            }
+            flag = true;
+            break;
         }
     }
-    cout << endl;
-    for (auto &pos : S_positions)
+    if (!flag || n == 1)
     {
-        for (auto &pair : keyboard) // Change from const auto& pair to auto& pair
-        {   if(best_distance_to_key.find(pair.first) == best_distance_to_key.end()) best_distance_to_key[pair.first] = 1e9;
-            for (int i = 0; i < pair.second.size(); i++)
-            {
-                double distance = euclideanDistance(pos, pair.second[i]);
-                best_distance_to_key[pair.first] = min(distance, best_distance_to_key[pair.first]);
-                // cout << "Comparing distance between position (" << pos.first << ", " << pos.second << ") and key " << pair.first << " at position (" << pair.second[i].first << ", " << pair.second[i].second << "): " << distance << endl;
-            }
-        }
+        cout << 0 << endl;
+        return;
     }
-
-    ll l;
-    cin >> l;
-    string s;
-    cin >> s;
-    ll sum = 0;
-
-    for (int i = 0; i < s.size(); i++)
+    pair<ll, ll> pair = countContiguousEquals(a);
+    // cout << pair.first << " " << pair.second << endl;
+    if (a.front() != a.back())
     {
-        if ((keyboard.find(tolower(s[i])) == keyboard.end()) || (isupper(s[i]) && S_positions.size() == 0))
-        {
-            cout << -1 << endl;
-            return;
-        }
-        if (isupper(s[i]) && best_distance_to_key[tolower(s[i])] > x)
-        {
-            sum += 1;
-        }
+        cout << min(a.size() - pair.first, pair.second + 1) << endl;
     }
-
-    cout << sum << endl;
+    else
+    {
+        cout << max(pair.second - pair.first + 1, 0LL) << endl;
+    }
 }
-
-signed main()
-{
-    FAST;
-    ll tt = 1;
-    // freopen("input.in", "r", stdin);
-    //   cin >> tt;
-    //   while (tt--)
-    solve();
-    return 0;
-}
+    signed main()
+    {
+        FAST;
+        ll tt = 1;
+        // freopen("input.in", "r", stdin);
+        cin >> tt;
+        while (tt--)
+            solve();
+        return 0;
+    }

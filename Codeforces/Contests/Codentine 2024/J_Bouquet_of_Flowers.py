@@ -7,8 +7,7 @@ import string
 ############ ---- Input Functions ---- ############
 def inp():
     return(int(input()))
-def inlt():
-    return(list(map(float,input().split())))
+
 def insr():                              #For taking string inputs. Actually it returns a List of Characters, instead of a string,
     s = input()                          # which is easier to use in Python, because in Python, Strings are Immutable.
     return(list(s[:len(s) ]))
@@ -24,6 +23,10 @@ def construct_graph(num_nodes, edges):
         graph[node2].append(node1)
  
     return graph
+
+
+def inlt():
+    return(list(map(float,input().split())))
 #############################################
 n = inp()
 while(n>0):

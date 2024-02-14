@@ -35,77 +35,37 @@ const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
-double euclideanDistance(pair<double, double> p1, pair<double, double> p2)
-{
-    double xDiff = p2.first - p1.first;
-    double yDiff = p2.second - p1.second;
-    return sqrt(xDiff * xDiff + yDiff * yDiff);
-}
-
 void solve()
 {
-    ll n, m, x;
-    cin >> n >> m >> x;
-    vector<pair<double, double>> S_positions;
-    map<char, vector<pair<double, double>>> keyboard;
-    map<char, double> best_distance_to_key;
-    for (double i = 0; i < n; i++)
-    {
-        for (double j = 0; j < m; j++)
-        {
-            char key;
-            cin >> key;
-            if (key == 'S')
-                S_positions.push_back(make_pair(i, j));
-            else
-            {
-                if (keyboard.find(key) != keyboard.end())
-                {
-                    keyboard[key].push_back(make_pair(i, j));
-                }
-                else
-                {
-                    vector<pair<double, double>> v;
-                    v.push_back(make_pair(i, j));
-                    keyboard[key] = v;
-                }
-            }
-        }
-    }
-    cout << endl;
-    for (auto &pos : S_positions)
-    {
-        for (auto &pair : keyboard) // Change from const auto& pair to auto& pair
-        {   if(best_distance_to_key.find(pair.first) == best_distance_to_key.end()) best_distance_to_key[pair.first] = 1e9;
-            for (int i = 0; i < pair.second.size(); i++)
-            {
-                double distance = euclideanDistance(pos, pair.second[i]);
-                best_distance_to_key[pair.first] = min(distance, best_distance_to_key[pair.first]);
-                // cout << "Comparing distance between position (" << pos.first << ", " << pos.second << ") and key " << pair.first << " at position (" << pair.second[i].first << ", " << pair.second[i].second << "): " << distance << endl;
-            }
-        }
-    }
+    ll n;
+    cin >> n;
+    vector<ll> v(n);
+    vector<ll> pairs;
+    vector<ll> impairs;
 
-    ll l;
-    cin >> l;
-    string s;
-    cin >> s;
+    for (int i = 0; i < n; i++)
+    {
+        cin >> v[i];
+    }
+    for (int i = 0; i < n; i++)
+    {
+        (v[i] * v[i]) % 2 ? impairs.push_back(i) : pairs.push_back(v[i] * v[i]);
+    }
     ll sum = 0;
-
-    for (int i = 0; i < s.size(); i++)
+    vector<ll> pref(n + 1, 0);
+    for (int i = 1; i < pref.size(); i++)
     {
-        if ((keyboard.find(tolower(s[i])) == keyboard.end()) || (isupper(s[i]) && S_positions.size() == 0))
-        {
-            cout << -1 << endl;
-            return;
-        }
-        if (isupper(s[i]) && best_distance_to_key[tolower(s[i])] > x)
-        {
-            sum += 1;
-        }
+        pref[i] = pref[i - 1] + v[i - 1] * v[i - 1];
     }
-
-    cout << sum << endl;
+    // for (int i = 1; i < pref.size(); i++)
+    // {
+    //     cout << pref[i] << " ";
+    // }
+    // cout << endl;
+    if (pref[n] % 2 == 0)
+        cout << pref[n] << endl;
+    else
+        cout << pref[n] - pref[impairs[0] + 1] << endl;
 }
 
 signed main()
@@ -113,8 +73,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    //   cin >> tt;
-    //   while (tt--)
-    solve();
+    cin >> tt;
+    while (tt--)
+        solve();
     return 0;
 }

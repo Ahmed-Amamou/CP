@@ -35,77 +35,66 @@ const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
-double euclideanDistance(pair<double, double> p1, pair<double, double> p2)
-{
-    double xDiff = p2.first - p1.first;
-    double yDiff = p2.second - p1.second;
-    return sqrt(xDiff * xDiff + yDiff * yDiff);
-}
-
 void solve()
 {
-    ll n, m, x;
-    cin >> n >> m >> x;
-    vector<pair<double, double>> S_positions;
-    map<char, vector<pair<double, double>>> keyboard;
-    map<char, double> best_distance_to_key;
-    for (double i = 0; i < n; i++)
-    {
-        for (double j = 0; j < m; j++)
-        {
-            char key;
-            cin >> key;
-            if (key == 'S')
-                S_positions.push_back(make_pair(i, j));
-            else
-            {
-                if (keyboard.find(key) != keyboard.end())
-                {
-                    keyboard[key].push_back(make_pair(i, j));
-                }
-                else
-                {
-                    vector<pair<double, double>> v;
-                    v.push_back(make_pair(i, j));
-                    keyboard[key] = v;
-                }
-            }
-        }
-    }
-    cout << endl;
-    for (auto &pos : S_positions)
-    {
-        for (auto &pair : keyboard) // Change from const auto& pair to auto& pair
-        {   if(best_distance_to_key.find(pair.first) == best_distance_to_key.end()) best_distance_to_key[pair.first] = 1e9;
-            for (int i = 0; i < pair.second.size(); i++)
-            {
-                double distance = euclideanDistance(pos, pair.second[i]);
-                best_distance_to_key[pair.first] = min(distance, best_distance_to_key[pair.first]);
-                // cout << "Comparing distance between position (" << pos.first << ", " << pos.second << ") and key " << pair.first << " at position (" << pair.second[i].first << ", " << pair.second[i].second << "): " << distance << endl;
-            }
-        }
-    }
-
-    ll l;
-    cin >> l;
+    ll n;
+    char c;
+    cin >> n >> c;
+    vector<ll> c_positions;
+    vector<ll> g_positions;
+    set<ll> distances;
     string s;
     cin >> s;
-    ll sum = 0;
-
     for (int i = 0; i < s.size(); i++)
     {
-        if ((keyboard.find(tolower(s[i])) == keyboard.end()) || (isupper(s[i]) && S_positions.size() == 0))
+        if (s[i] == 'g')
+            g_positions.push_back(i);
+        if (s[i] == c)
+            c_positions.push_back(i);
+    }
+    for (int i = 0; i < c_positions.size(); i++)
+    {
+        ll j = c_positions[i];
+        ll k = 0;
+        while (true)
         {
-            cout << -1 << endl;
-            return;
-        }
-        if (isupper(s[i]) && best_distance_to_key[tolower(s[i])] > x)
-        {
-            sum += 1;
+            
+            if (s[j] == 'g')
+            {
+                distances.insert(k);
+                break;
+            }
+            j = (j + 1) % (n);
+            k++;
         }
     }
 
-    cout << sum << endl;
+    // // Print elements of c_positions vector
+    // cout << "c_positions: ";
+    // for (auto &elem : c_positions)
+    // {
+    //     cout << elem << " ";
+    // }
+    // cout << endl;
+
+    // // Print elements of g_positions vector
+    // cout << "g_positions: ";
+    // for (auto &elem : g_positions)
+    // {
+    //     cout << elem << " ";
+    // }
+    // cout << endl;
+
+    // // Print elements of distances set
+    // cout << "distances: ";
+    // for (auto &elem : distances)
+    // {
+    //     cout << elem << " ";
+    // }
+    // cout << endl;
+
+    ll max_distance = *max_element(distances.begin(), distances.end());
+    cout << max_distance << endl;
 }
 
 signed main()
@@ -113,8 +102,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    //   cin >> tt;
-    //   while (tt--)
-    solve();
+    cin >> tt;
+    while (tt--)
+        solve();
     return 0;
 }
