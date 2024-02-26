@@ -29,12 +29,6 @@
     cin.tie(0);                       \
     cout.tie(0)
 using namespace std;
-#include <bits/stdc++.h>
-using namespace std;
-
-#include <bits/stdc++.h>
-using namespace std;
-
 
 const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
@@ -44,37 +38,34 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 void solve()
 {
     ll n;
-    char c;
-    cin >> n >> c;
-    vector<ll> c_positions;
-    vector<ll> g_positions;
-    set<ll> distances;
-    string s;
-    cin >> s;
-    s += s;
-    // cout << s << endl;
-    bool found = false;
-    int pos_c = 0;
-    int mx = 0;
-    for (int i = 0; i < s.size(); i++)
-    {
-        if (s[i] == c && found == false)
-        {
-            pos_c = i;
-            found = true;
-        }
-        // cout << "pos_c: " << pos_c << endl;
-        if (s[i] == 'g' && found == true)
-        {
-            mx = max(mx, i - pos_c);
-            found = false;
-        }
-    }
-    // debug(mx);
-    cout << mx << endl;
+    cin >> n;
+    vector<ll> v(n);
+    vector<ll> pairs;
+    vector<ll> impairs;
 
-    // ll max_distance = *max_element(distances.begin(), distances.end());
-    // cout << max_distance << endl;
+    for (int i = 0; i < n; i++)
+    {
+        cin >> v[i];
+    }
+    for (int i = 0; i < n; i++)
+    {
+        (v[i] * v[i]) % 2 ? impairs.push_back(i) : pairs.push_back(v[i] * v[i]);
+    }
+    ll sum = 0;
+    vector<ll> pref(n + 1, 0);
+    for (int i = 1; i < pref.size(); i++)
+    {
+        pref[i] = pref[i - 1] + v[i - 1] * v[i - 1];
+    }
+    // for (int i = 1; i < pref.size(); i++)
+    // {
+    //     cout << pref[i] << " ";
+    // }
+    // cout << endl;
+    if (pref[n] % 2 == 0)
+        cout << pref[n] << endl;
+    else
+        cout << pref[n] - pref[impairs[0] + 1] << endl;
 }
 
 signed main()

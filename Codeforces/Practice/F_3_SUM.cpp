@@ -29,37 +29,43 @@ void solve()
 {
     ll n;
     cin >> n;
-
-    map<ll, ll> numbers;
-    ll res = 0;
-    ll z = (1LL << 31) - 1;
-    // cout << "z: " << bitset<32>(z) << endl;
-    for (int i = 0; i < n; i++)
+    vector<ll> v;
+    map<ll, ll> digits = {{0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}, {8, 0}, {9, 0}};
+    ll i = 0;
+    while (i < n)
     {
-        ll x, y;
+        ll x;
         cin >> x;
-        y = z ^ x;
-        // cout << "y: " << bitset<32>(y) << endl;
-
-        if (numbers[x] != 0)
+        x %= 10;
+        if (digits[x] < 3)
         {
-            numbers[x]--;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
+            v.push_back(x);
+            digits[x]++;
         }
-        else
-        {
-            res++;
-            numbers[y]++;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
-        }
+        i++;
     }
-    cout << res << endl;
+    // for (auto num : v)
+    // {
+    //     cout << num << " ";
+    // }
+    // cout << endl;
+    for (int i = 0; i < v.size()-2; i++)
+    {
+        for (int j = i+1; j < v.size()-1; j++)
+        {
+            for (int k = j+1; k < v.size(); k++)
+            {
+                if((v[i]+v[j]+v[k])%10 == 3) {
+                    cout << "YES"<<endl;
+                    return;
+                }
+            }
+            
+        }
+        
+    }
+    cout << "NO"<<endl;
+    
 }
 
 signed main()

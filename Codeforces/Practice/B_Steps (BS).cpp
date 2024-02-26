@@ -24,42 +24,48 @@ const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
+ll n, m;
+bool valid(ll x, ll y)
+{
+    return x >= 1 && y >= 1 && x <= n && y <= m;
+}
 
 void solve()
 {
-    ll n;
-    cin >> n;
 
-    map<ll, ll> numbers;
-    ll res = 0;
-    ll z = (1LL << 31) - 1;
-    // cout << "z: " << bitset<32>(z) << endl;
-    for (int i = 0; i < n; i++)
+    cin >> n >> m;
+    ll x, y;
+    cin >> x >> y;
+    ll q;
+    cin >> q;
+    ll moves = 0;
+    ll y_move, x_move;
+    for (int i = 0; i < q; i++)
     {
-        ll x, y;
-        cin >> x;
-        y = z ^ x;
-        // cout << "y: " << bitset<32>(y) << endl;
-
-        if (numbers[x] != 0)
+        ll vx, vy;
+        cin >> vx >> vy;
+        ll mid, move;
+        ll low = 0;
+        ll high = 1e9;
+        while (low <= high)
         {
-            numbers[x]--;
-            for (const auto &num : numbers)
+            mid = low + (high - low) / 2;
+            if (valid(x + mid * vx, y + mid * vy))
             {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
+                move = mid;
+                low = mid + 1;
+            }
+            else
+            {
+                high = mid - 1;
             }
         }
-        else
-        {
-            res++;
-            numbers[y]++;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
-        }
+        x += move * vx;
+        y += move * vy;
+        moves += move;
+        // cout << "x: "<< x << "y: "<<y <<endl;
     }
-    cout << res << endl;
+    cout << moves << endl;
 }
 
 signed main()
@@ -67,8 +73,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    cin >> tt;
-    while (tt--)
-        solve();
+    //   cin >> tt;
+    //   while (tt--)
+    solve();
     return 0;
 }

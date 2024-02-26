@@ -25,41 +25,48 @@ const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
-void solve()
-{
-    ll n;
-    cin >> n;
+const int MAXN = 1000000;
 
-    map<ll, ll> numbers;
-    ll res = 0;
-    ll z = (1LL << 31) - 1;
-    // cout << "z: " << bitset<32>(z) << endl;
-    for (int i = 0; i < n; i++)
-    {
-        ll x, y;
-        cin >> x;
-        y = z ^ x;
-        // cout << "y: " << bitset<32>(y) << endl;
+set<int> primes;
 
-        if (numbers[x] != 0)
-        {
-            numbers[x]--;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
-        }
-        else
-        {
-            res++;
-            numbers[y]++;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
+void sieve() {
+    vector<bool> isPrime(MAXN + 1, true);
+    isPrime[0] = isPrime[1] = false;
+
+    for (int i = 2; i * i <= MAXN; i++) {
+        if (isPrime[i]) {
+            for (int j = i * i; j <= MAXN; j += i) {
+                isPrime[j] = false;
             }
         }
     }
-    cout << res << endl;
+
+    for (int i = 2; i <= MAXN; i++) {
+        if (isPrime[i]) {
+            primes.insert(i);
+        }
+    }
+}
+
+
+void solve()
+{   sieve();
+    ll n;
+    cin >> n;
+    for (int i = 0; i < n; i++)
+    {
+        ll x;
+        cin >> x;
+        if (x <= 3)
+            cout << "NO" << endl;
+        else
+        {
+            if (sqrt(x) - (int)sqrt(x) == 0.0 && primes.find((ll)(sqrt(x)))!=primes.end() )
+                cout << "YES" << endl;
+            else
+                cout << "NO" << endl;
+        }
+    }
 }
 
 signed main()
@@ -67,8 +74,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    cin >> tt;
-    while (tt--)
-        solve();
+    //   cin >> tt;
+    //   while (tt--)
+    solve();
     return 0;
 }

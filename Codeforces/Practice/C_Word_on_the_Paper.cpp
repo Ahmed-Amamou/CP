@@ -26,40 +26,19 @@ int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
-{
-    ll n;
-    cin >> n;
-
-    map<ll, ll> numbers;
-    ll res = 0;
-    ll z = (1LL << 31) - 1;
-    // cout << "z: " << bitset<32>(z) << endl;
-    for (int i = 0; i < n; i++)
+{   string s;
+    ll k ;
+    for (int i = 0; i < 8; i++)
     {
-        ll x, y;
-        cin >> x;
-        y = z ^ x;
-        // cout << "y: " << bitset<32>(y) << endl;
-
-        if (numbers[x] != 0)
+        cin >> s;
+        for (int j = 0; j < s.size(); j++)
         {
-            numbers[x]--;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
+            if(islower(s[j])) {
+                break;
             }
         }
-        else
-        {
-            res++;
-            numbers[y]++;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
-        }
+        
     }
-    cout << res << endl;
 }
 
 signed main()

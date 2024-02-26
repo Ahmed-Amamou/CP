@@ -29,37 +29,33 @@ void solve()
 {
     ll n;
     cin >> n;
-
-    map<ll, ll> numbers;
-    ll res = 0;
-    ll z = (1LL << 31) - 1;
-    // cout << "z: " << bitset<32>(z) << endl;
+    bool flag1 = false;
+    bool flag2 = false;
+    bool flag3 = false;
     for (int i = 0; i < n; i++)
     {
-        ll x, y;
+        int x;
         cin >> x;
-        y = z ^ x;
-        // cout << "y: " << bitset<32>(y) << endl;
-
-        if (numbers[x] != 0)
-        {
-            numbers[x]--;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
-        }
-        else
-        {
-            res++;
-            numbers[y]++;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
-        }
+        if (x == 7)
+            flag1 = true;
     }
-    cout << res << endl;
+    for (int i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        if (x == 7)
+            flag2 = true;
+    }
+    for (int i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        if (x == 7)
+            flag3 = true;
+    }
+    if (flag1 && flag2 && flag3)
+    cout << 777 <<endl;
+    else cout << 0 <<endl;
 }
 
 signed main()
@@ -67,8 +63,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    cin >> tt;
-    while (tt--)
-        solve();
+    //   cin >> tt;
+    //   while (tt--)
+    solve();
     return 0;
 }

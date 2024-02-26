@@ -1,9 +1,33 @@
-n,m = map(int, input().split())
-numbers = [int(m) for m in input().split()]
-sorted_numbers = sorted(numbers)
-min_diff = sorted_numbers[n-1] - sorted_numbers[0]
-for i in range(m-n):
-    diff = sorted_numbers[i + n] - sorted_numbers[i]
-    if diff < min_diff:
-        min_diff = diff
-print(min_diff)
+def perform_queries_2(s, queries):
+    """
+    Performs character replacements using a prefix sum array for frequency tracking.
+
+    Args:
+        s: The input string.
+        queries: A list of character pairs, where each pair represents a character replacement
+                 in the format ['old_char', 'new_char'].
+
+    Returns:
+        The final string after all the queries have been performed.
+    """
+
+    n = len(s)
+    freq = [0] * 26  # Assuming only lowercase English letters
+
+    for c in s:
+        freq[ord(c) - ord('a')] += 1
+
+    for old_char, new_char in queries:
+        freq[ord(old_char) - ord('a')] -= 1
+        freq[ord(new_char) - ord('a')] += 1
+
+    result = []
+    for i in range(n):
+        for c in range(26):
+            if freq[c] > 0:
+                freq[c] -= 1
+                result.append(chr(c + ord('a')))
+                break
+
+    return ''.join(result)
+print(perform_queries_2("atcoder",[['r','a'],['t', 'e'],['d', 'v'],['a', 'r']]))

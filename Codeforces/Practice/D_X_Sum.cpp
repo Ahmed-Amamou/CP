@@ -27,39 +27,54 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    ll n;
-    cin >> n;
-
-    map<ll, ll> numbers;
-    ll res = 0;
-    ll z = (1LL << 31) - 1;
-    // cout << "z: " << bitset<32>(z) << endl;
+    ll n, m;
+    cin >> n >> m;
+    ll grid[n][m];
     for (int i = 0; i < n; i++)
     {
-        ll x, y;
-        cin >> x;
-        y = z ^ x;
-        // cout << "y: " << bitset<32>(y) << endl;
-
-        if (numbers[x] != 0)
+        for (int j = 0; j < m; j++)
         {
-            numbers[x]--;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
-        }
-        else
-        {
-            res++;
-            numbers[y]++;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
+            cin >> grid[i][j];
         }
     }
-    cout << res << endl;
+    ll mx = 0;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            ll local_sum = grid[i][j];
+            int curr_j = j - 1, curr_i = i - 1;
+            while (curr_i >= 0 && curr_i < n && curr_j >= 0 && curr_j < m)
+            {
+                local_sum += grid[curr_i][curr_j];
+                curr_i--;
+                curr_j--;
+            }
+            curr_j = j + 1, curr_i = i + 1;
+            while (curr_i >= 0 && curr_i < n && curr_j >= 0 && curr_j < m)
+            {
+                local_sum += grid[curr_i][curr_j];
+                curr_i++;
+                curr_j++;
+            }
+            curr_j = j - 1, curr_i = i + 1;
+            while (curr_i >= 0 && curr_i < n && curr_j >= 0 && curr_j < m)
+            {
+                local_sum += grid[curr_i][curr_j];
+                curr_i++;
+                curr_j--;
+            }
+            curr_j = j + 1, curr_i = i - 1;
+            while (curr_i >= 0 && curr_i < n && curr_j >= 0 && curr_j < m)
+            {
+                local_sum += grid[curr_i][curr_j];
+                curr_i--;
+                curr_j++;
+            }
+            mx = max(mx, local_sum);
+        }
+    }
+    cout << mx << endl;
 }
 
 signed main()

@@ -27,39 +27,48 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    ll n;
-    cin >> n;
+    ll n, m;
+    cin >> n >> m;
+    int mnM[m];
+    for (int i = 0; i < m; i++)
+    {
+        mnM[i] = 1000;
+    }
 
-    map<ll, ll> numbers;
-    ll res = 0;
-    ll z = (1LL << 31) - 1;
-    // cout << "z: " << bitset<32>(z) << endl;
+    string s[n];
     for (int i = 0; i < n; i++)
     {
-        ll x, y;
-        cin >> x;
-        y = z ^ x;
-        // cout << "y: " << bitset<32>(y) << endl;
-
-        if (numbers[x] != 0)
-        {
-            numbers[x]--;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
-        }
-        else
-        {
-            res++;
-            numbers[y]++;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
-        }
+        cin >> s[i];
     }
-    cout << res << endl;
+    ll mn = 27 * m;
+    ll minim;
+    for (int i = 0; i < n; i++)
+    {
+
+        for (int k = i + 1; k < n; k++)
+        {
+            minim = 0;
+
+            for (int j = 0; j < m; j++)
+            {
+                minim += abs(s[i][j] - s[k][j]);
+                // cout << minim << endl;
+            }
+            mn = min(minim, mn);
+        }
+
+        
+        // cout << "-----" << endl;
+    }
+    // cout << "mnM: ";
+    // for (int i = 0; i < m; i++)
+    // {
+    //     cout << mnM[i] << " ";
+    // }
+    // cout << endl;
+
+    // cout << "---" << endl;
+    cout << mn << endl;
 }
 
 signed main()

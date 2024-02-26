@@ -29,52 +29,86 @@
     cin.tie(0);                       \
     cout.tie(0)
 using namespace std;
-#include <bits/stdc++.h>
-using namespace std;
-
-#include <bits/stdc++.h>
-using namespace std;
-
 
 const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
-
+vector<ll> reverse_v(vector<ll> v, ll l, ll r)
+{
+    vector<ll> res = v;
+    while (l < r)
+    {
+        swap(res[l], res[r]);
+        l++;
+        r--;
+    }
+    return res;
+}
 void solve()
 {
+
     ll n;
-    char c;
-    cin >> n >> c;
-    vector<ll> c_positions;
-    vector<ll> g_positions;
-    set<ll> distances;
-    string s;
-    cin >> s;
-    s += s;
-    // cout << s << endl;
-    bool found = false;
-    int pos_c = 0;
-    int mx = 0;
-    for (int i = 0; i < s.size(); i++)
+    cin >> n;
+    vector<ll> a;
+    for (int i = 0; i < n; i++)
     {
-        if (s[i] == c && found == false)
+        ll x;
+        cin >> x;
+        a.push_back(x);
+    }
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cout << a[i] << " ";
+    // }
+    // cout << endl;
+    bool increasing = true;
+    bool decreasing = true;
+
+    for (int i = 1; i < n; i++)
+    {
+        if (a[i] < a[i - 1])
         {
-            pos_c = i;
-            found = true;
+            increasing = false;
         }
-        // cout << "pos_c: " << pos_c << endl;
-        if (s[i] == 'g' && found == true)
+        if (a[i] > a[i - 1])
         {
-            mx = max(mx, i - pos_c);
-            found = false;
+            decreasing = false;
         }
     }
-    // debug(mx);
-    cout << mx << endl;
-
-    // ll max_distance = *max_element(distances.begin(), distances.end());
-    // cout << max_distance << endl;
+    if (increasing)
+    {
+        cout << "yes" << endl;
+        cout << "1 1" << endl;
+        return;
+    }
+    else if (decreasing)
+    {
+        cout << "yes" << endl;
+        cout << "1 " << n;
+        return;
+    }
+    // cout << "test";
+    ll r, l;
+    decreasing = false;
+    for (int i = 1; i < n; i++)
+    {
+        if (a[i] < a[i - 1] && decreasing == false)
+        {
+            l = i - 1;
+            decreasing = true;
+        }
+        if (a[i] > a[i - 1] && decreasing == true){
+            r = i - 1;
+            break;
+        }
+        r= n-1;
+    }
+    vector<ll> res = reverse_v(a, l, r);
+    bool sorted = is_sorted(res.begin(), res.end());
+    sorted ? cout << "yes\n"
+                  << l + 1 << " " << r + 1
+           : cout << "no";
 }
 
 signed main()
@@ -82,8 +116,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    cin >> tt;
-    while (tt--)
-        solve();
+    //   cin >> tt;
+    //   while (tt--)
+    solve();
     return 0;
 }

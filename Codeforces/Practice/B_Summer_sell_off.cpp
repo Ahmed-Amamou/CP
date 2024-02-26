@@ -29,12 +29,6 @@
     cin.tie(0);                       \
     cout.tie(0)
 using namespace std;
-#include <bits/stdc++.h>
-using namespace std;
-
-#include <bits/stdc++.h>
-using namespace std;
-
 
 const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
@@ -43,38 +37,26 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    ll n;
-    char c;
-    cin >> n >> c;
-    vector<ll> c_positions;
-    vector<ll> g_positions;
-    set<ll> distances;
-    string s;
-    cin >> s;
-    s += s;
-    // cout << s << endl;
-    bool found = false;
-    int pos_c = 0;
-    int mx = 0;
-    for (int i = 0; i < s.size(); i++)
+    ll n , f ;
+    cin >> n >> f;
+    vector<pair<ll,pair<ll,ll>>> v;
+    for (int i = 0; i < n; i++)
     {
-        if (s[i] == c && found == false)
-        {
-            pos_c = i;
-            found = true;
-        }
-        // cout << "pos_c: " << pos_c << endl;
-        if (s[i] == 'g' && found == true)
-        {
-            mx = max(mx, i - pos_c);
-            found = false;
-        }
+        ll x ,y;
+        cin >> x >> y ;
+        v.push_back(make_pair(min(2*x,y)-min(x,y),make_pair(min(2*x,y),min(x,y))));
     }
-    // debug(mx);
-    cout << mx << endl;
+    sort(v.rbegin(),v.rend());
+    ll sum = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if( i < f) sum+=v[i].second.first;
+        else sum +=v[i].second.second; 
+    }
+    cout << sum <<endl;
+    
 
-    // ll max_distance = *max_element(distances.begin(), distances.end());
-    // cout << max_distance << endl;
+    
 }
 
 signed main()
@@ -82,8 +64,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    cin >> tt;
-    while (tt--)
-        solve();
+    //   cin >> tt;
+    //   while (tt--)
+    solve();
     return 0;
 }

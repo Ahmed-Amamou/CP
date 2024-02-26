@@ -29,12 +29,6 @@
     cin.tie(0);                       \
     cout.tie(0)
 using namespace std;
-#include <bits/stdc++.h>
-using namespace std;
-
-#include <bits/stdc++.h>
-using namespace std;
-
 
 const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
@@ -43,38 +37,40 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    ll n;
-    char c;
-    cin >> n >> c;
-    vector<ll> c_positions;
-    vector<ll> g_positions;
-    set<ll> distances;
-    string s;
-    cin >> s;
-    s += s;
-    // cout << s << endl;
-    bool found = false;
-    int pos_c = 0;
-    int mx = 0;
-    for (int i = 0; i < s.size(); i++)
+    ll n, m, sx, sy, d;
+    cin >> n >> m >> sx >> sy >> d;
+    bool boucle1=true,boucle2=true,boucle3=true,boucle4=true;
+    for (int i = 1; i <= n; i++)
     {
-        if (s[i] == c && found == false)
-        {
-            pos_c = i;
-            found = true;
-        }
-        // cout << "pos_c: " << pos_c << endl;
-        if (s[i] == 'g' && found == true)
-        {
-            mx = max(mx, i - pos_c);
-            found = false;
+        if (abs(i - sx) + abs(1 - sy) <= d)
+        {   boucle1 = false;
+            break;
         }
     }
-    // debug(mx);
-    cout << mx << endl;
-
-    // ll max_distance = *max_element(distances.begin(), distances.end());
-    // cout << max_distance << endl;
+    for (int j = 1; j <= m; j++)
+    {
+        if (abs(n - sx) + abs(j - sy) <= d)
+        {   boucle2 = false;
+            break;
+        }
+    }
+    for (int i = 1; i <= m; i++)
+    {
+        if (abs(1 - sx) + abs(i - sy) <= d)
+        {   boucle3 = false;
+            break;
+        }
+    }
+    for (int j = 1; j <= n; j++)
+    {
+        if (abs(j - sx) + abs(m - sy) <= d)
+        {   boucle4 = false;
+            break;
+        }
+    }
+    if((boucle1 && boucle2) || (boucle3 && boucle4)) cout << n+m -2<<endl;
+    else cout << -1 <<endl;
+    
 }
 
 signed main()

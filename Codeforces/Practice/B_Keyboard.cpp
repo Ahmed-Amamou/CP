@@ -29,52 +29,83 @@
     cin.tie(0);                       \
     cout.tie(0)
 using namespace std;
-#include <bits/stdc++.h>
-using namespace std;
-
-#include <bits/stdc++.h>
-using namespace std;
-
 
 const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
+double euclideanDistance(pair<double, double> p1, pair<double, double> p2)
+{
+    double xDiff = p2.first - p1.first;
+    double yDiff = p2.second - p1.second;
+    return sqrt(xDiff * xDiff + yDiff * yDiff);
+}
+
 void solve()
 {
-    ll n;
-    char c;
-    cin >> n >> c;
-    vector<ll> c_positions;
-    vector<ll> g_positions;
-    set<ll> distances;
-    string s;
-    cin >> s;
-    s += s;
-    // cout << s << endl;
-    bool found = false;
-    int pos_c = 0;
-    int mx = 0;
-    for (int i = 0; i < s.size(); i++)
+    ll n, m, x;
+    cin >> n >> m >> x;
+    vector<pair<double, double>> S_positions;
+    map<char, vector<pair<double, double>>> keyboard;
+    map<char, double> best_distance_to_key;
+    for (double i = 0; i < n; i++)
     {
-        if (s[i] == c && found == false)
+        for (double j = 0; j < m; j++)
         {
-            pos_c = i;
-            found = true;
-        }
-        // cout << "pos_c: " << pos_c << endl;
-        if (s[i] == 'g' && found == true)
-        {
-            mx = max(mx, i - pos_c);
-            found = false;
+            char key;
+            cin >> key;
+            if (key == 'S')
+                S_positions.push_back(make_pair(i, j));
+            else
+            {
+                if (keyboard.find(key) != keyboard.end())
+                {
+                    keyboard[key].push_back(make_pair(i, j));
+                }
+                else
+                {
+                    vector<pair<double, double>> v;
+                    v.push_back(make_pair(i, j));
+                    keyboard[key] = v;
+                }
+            }
         }
     }
-    // debug(mx);
-    cout << mx << endl;
+    cout << endl;
+    for (auto &pos : S_positions)
+    {
+        for (auto &pair : keyboard) // Change from const auto& pair to auto& pair
+        {   if(best_distance_to_key.find(pair.first) == best_distance_to_key.end()) best_distance_to_key[pair.first] = 1e9;
+            for (int i = 0; i < pair.second.size(); i++)
+            {
+                double distance = euclideanDistance(pos, pair.second[i]);
+                best_distance_to_key[pair.first] = min(distance, best_distance_to_key[pair.first]);
+                // cout << "Comparing distance between position (" << pos.first << ", " << pos.second << ") and key " << pair.first << " at position (" << pair.second[i].first << ", " << pair.second[i].second << "): " << distance << endl;
+            }
+        }
+    }
 
-    // ll max_distance = *max_element(distances.begin(), distances.end());
-    // cout << max_distance << endl;
+    ll l;
+    cin >> l;
+    string s;
+    cin >> s;
+    ll sum = 0;
+
+    for (int i = 0; i < s.size(); i++)
+    {
+        if ((keyboard.find(tolower(s[i])) == keyboard.end()) || (isupper(s[i]) && S_positions.size() == 0))
+        {
+            cout << -1 << endl;
+            return;
+        }
+        if (isupper(s[i]) && best_distance_to_key[tolower(s[i])] > x)
+        {
+            sum += 1;
+        }
+    }
+
+    cout << sum << endl;
 }
 
 signed main()
@@ -82,8 +113,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    cin >> tt;
-    while (tt--)
-        solve();
+    //   cin >> tt;
+    //   while (tt--)
+    solve();
     return 0;
 }

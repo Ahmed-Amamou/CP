@@ -29,61 +29,85 @@
     cin.tie(0);                       \
     cout.tie(0)
 using namespace std;
-#include <bits/stdc++.h>
-using namespace std;
-
-#include <bits/stdc++.h>
-using namespace std;
-
 
 const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
+pair<ll, ll> countContiguousEquals(const vector<ll> &vec)
+{
+    ll pointer1 = 0, pointer2 = vec.size() - 1;
+    // Count contiguous equals from the left
+    for (int i = 0; i < vec.size(); i++)
+    {
+        if (vec[i] == vec[i - 1])
+        {
+            pointer1++;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    // Count contiguous equals from the right
+    for (int i = vec.size() - 1; i >= 0; i--)
+    {
+        if (vec[i] == vec[i + 1])
+        {
+            pointer2--;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    return make_pair(pointer1, pointer2);
+}
+
 void solve()
 {
     ll n;
-    char c;
-    cin >> n >> c;
-    vector<ll> c_positions;
-    vector<ll> g_positions;
-    set<ll> distances;
-    string s;
-    cin >> s;
-    s += s;
-    // cout << s << endl;
-    bool found = false;
-    int pos_c = 0;
-    int mx = 0;
-    for (int i = 0; i < s.size(); i++)
+    cin >> n;
+    vector<ll> a(n);
+    for (int i = 0; i < n; i++)
     {
-        if (s[i] == c && found == false)
+        cin >> a[i];
+    }
+    bool flag = false;
+    for (int i = 1; i < n; i++)
+    {
+        if (a[i] != a[0])
         {
-            pos_c = i;
-            found = true;
-        }
-        // cout << "pos_c: " << pos_c << endl;
-        if (s[i] == 'g' && found == true)
-        {
-            mx = max(mx, i - pos_c);
-            found = false;
+            flag = true;
+            break;
         }
     }
-    // debug(mx);
-    cout << mx << endl;
-
-    // ll max_distance = *max_element(distances.begin(), distances.end());
-    // cout << max_distance << endl;
+    if (!flag || n == 1)
+    {
+        cout << 0 << endl;
+        return;
+    }
+    pair<ll, ll> pair = countContiguousEquals(a);
+    // cout << pair.first << " " << pair.second << endl;
+    if (a.front() != a.back())
+    {
+        cout << min(a.size() - pair.first, pair.second + 1) << endl;
+    }
+    else
+    {
+        cout << max(pair.second - pair.first + 1, 0LL) << endl;
+    }
 }
-
-signed main()
-{
-    FAST;
-    ll tt = 1;
-    // freopen("input.in", "r", stdin);
-    cin >> tt;
-    while (tt--)
-        solve();
-    return 0;
-}
+    signed main()
+    {
+        FAST;
+        ll tt = 1;
+        // freopen("input.in", "r", stdin);
+        cin >> tt;
+        while (tt--)
+            solve();
+        return 0;
+    }

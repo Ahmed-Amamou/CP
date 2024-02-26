@@ -29,37 +29,58 @@ void solve()
 {
     ll n;
     cin >> n;
-
-    map<ll, ll> numbers;
-    ll res = 0;
-    ll z = (1LL << 31) - 1;
-    // cout << "z: " << bitset<32>(z) << endl;
+    ll a[n];
+    ll pos_0 = -1;
     for (int i = 0; i < n; i++)
     {
-        ll x, y;
-        cin >> x;
-        y = z ^ x;
-        // cout << "y: " << bitset<32>(y) << endl;
+        cin >> a[i];
+        if (a[i] == 0)
+            pos_0 = i;
+    }
+    if (n == 1 && a[0] == 0)
+    {
+        cout << 0 << endl;
+        return;
+    }
+    if (pos_0 == -1)
+    {
+        cout << 1 << endl;
+        return;
+    }
 
-        if (numbers[x] != 0)
+    ll longuest_right = 1LL;
+    ll longuest_left = 1LL;
+    ll amin = pos_0 + 1;
+    ll k = 1;
+    while (amin < n)
+    {
+        if (a[amin] == k)
         {
-            numbers[x]--;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
+            k++;
+            longuest_right++;
+            amin++;
         }
         else
-        {
-            res++;
-            numbers[y]++;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
-        }
+            break;
     }
-    cout << res << endl;
+    k = 1;
+    amin = pos_0 - 1;
+    while (amin >= 0)
+    {
+        if (a[amin] == k)
+        {
+            k++;
+            longuest_right++;
+            amin--;
+        }
+        else
+            break;
+    }
+    // if (longuest_left == 1 && longuest_right==1){
+    //     cout << 2 << endl;
+    // }
+
+    cout << max(longuest_left, longuest_right) + 1 << endl;
 }
 
 signed main()

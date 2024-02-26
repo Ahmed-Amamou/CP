@@ -25,41 +25,39 @@ const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
+// freopen("input.in", "r", stdin);
+//   cin >> tt;
+//   while (tt--)
+// cout << "hello" << endl;
+// solve();
+
 void solve()
 {
-    ll n;
-    cin >> n;
+    int C[100][100];
+    C[1][1] = 1;
+    C[1][0] = 1;
 
-    map<ll, ll> numbers;
-    ll res = 0;
-    ll z = (1LL << 31) - 1;
-    // cout << "z: " << bitset<32>(z) << endl;
-    for (int i = 0; i < n; i++)
+    for (int i = 2; i < 100; i++)
     {
-        ll x, y;
-        cin >> x;
-        y = z ^ x;
-        // cout << "y: " << bitset<32>(y) << endl;
-
-        if (numbers[x] != 0)
+        C[i][0] = 1;
+        for (int j = 1; j <= i; j++)
         {
-            numbers[x]--;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
-        }
-        else
-        {
-            res++;
-            numbers[y]++;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
+            C[i][j] = C[i - 1][j - 1] + C[i - 1][j];
         }
     }
-    cout << res << endl;
+    ll n, p, a, b, k, s = 0;
+    cin >> n >> k;
+    for (int i = 2; i < min(2 * k, n); i++)
+    {
+        s = s + n - i;
+    }
+    if (n < 3)
+    {
+        cout << 1 << " " << 1 << endl;
+        return;
+    }
+    p = gcd(n * n - s, n * n);
+    cout << s / p << " " << (n * n) / p << endl;
 }
 
 signed main()

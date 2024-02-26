@@ -29,37 +29,47 @@ void solve()
 {
     ll n;
     cin >> n;
-
-    map<ll, ll> numbers;
-    ll res = 0;
-    ll z = (1LL << 31) - 1;
-    // cout << "z: " << bitset<32>(z) << endl;
+    int a[n];
+    int occurence[5] = {0};
     for (int i = 0; i < n; i++)
     {
-        ll x, y;
-        cin >> x;
-        y = z ^ x;
-        // cout << "y: " << bitset<32>(y) << endl;
+        cin >> a[i];
+        occurence[a[i]]++;
+    }
+    ll ans = occurence[4];
 
-        if (numbers[x] != 0)
+    if (occurence[3] > occurence[1])
+    {
+        ans += occurence[3];
+        occurence[1] = 0;
+    }
+    else
+    {
+        ans += occurence[3];
+        occurence[1] -= occurence[3];
+    }
+    // cout << ans <<endl;
+    if (occurence[1] == 0)
+    {
+        ans += (int)ceil(occurence[2] / (double)2);
+    }
+    
+    else
+    {
+        ans += occurence[2] / 2;
+        occurence[2] -= 2*(occurence[2] / 2);
+        if (occurence[2] && occurence[1] >= 2)
         {
-            numbers[x]--;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
+            ans += 1;
+            occurence[1] -= 2;
         }
-        else
+        // cout << ans <<endl;
+        if (occurence[1] > 0)
         {
-            res++;
-            numbers[y]++;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
+            ans += (int)ceil((double)(occurence[1]) / (double)4);
         }
     }
-    cout << res << endl;
+    cout << ans << endl;
 }
 
 signed main()
@@ -67,8 +77,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    cin >> tt;
-    while (tt--)
-        solve();
+    //   cin >> tt;
+    //   while (tt--)
+    solve();
     return 0;
 }

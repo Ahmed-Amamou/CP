@@ -29,52 +29,71 @@
     cin.tie(0);                       \
     cout.tie(0)
 using namespace std;
-#include <bits/stdc++.h>
-using namespace std;
-
-#include <bits/stdc++.h>
-using namespace std;
-
 
 const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
-
+// if k <= number of negative number : we just change all of them
+// else we see if k and nubmer of negatives have the same parity we change all negatives
+// if not we change all but the last one
 void solve()
 {
-    ll n;
-    char c;
-    cin >> n >> c;
-    vector<ll> c_positions;
-    vector<ll> g_positions;
-    set<ll> distances;
-    string s;
-    cin >> s;
-    s += s;
-    // cout << s << endl;
-    bool found = false;
-    int pos_c = 0;
-    int mx = 0;
-    for (int i = 0; i < s.size(); i++)
+    ll n, k;
+    cin >> n >> k;
+    ll orig_k = k;
+    int a[n];
+    for (int i = 0; i < n; i++)
     {
-        if (s[i] == c && found == false)
+        cin >> a[i];
+    }
+    ll i = 0;
+    while (k && a[i] < 0 && i < n )
+    {
+        a[i] *= -1;
+        k--;
+        i++;
+    }
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cout << a[i]<< " ";
+    // }
+    // cout << "k: "<<k<<endl;
+    if (i == n)
+    {
+        if (k % 2 == 1)
+            a[0] *= -1;
+    }
+    else if (a[i] > 0 && k % 2)
+    {
+        if (i > 0)
         {
-            pos_c = i;
-            found = true;
+            if (a[i - 1] >= a[i])
+            {
+                a[i] *= -1;
+            }
+            else
+            {
+                a[i - 1] *= -1;
+            }
         }
-        // cout << "pos_c: " << pos_c << endl;
-        if (s[i] == 'g' && found == true)
+        else
         {
-            mx = max(mx, i - pos_c);
-            found = false;
+            a[0]*=-1;
         }
     }
-    // debug(mx);
-    cout << mx << endl;
 
-    // ll max_distance = *max_element(distances.begin(), distances.end());
-    // cout << max_distance << endl;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cout << a[i] << " ";
+    // }
+    // cout << endl;
+    ll sum = 0;
+    for (int i = 0; i < n; i++)
+    {
+        sum += a[i];
+    }
+    cout << sum;
 }
 
 signed main()
@@ -82,8 +101,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    cin >> tt;
-    while (tt--)
-        solve();
+    //   cin >> tt;
+    //   while (tt--)
+    solve();
     return 0;
 }

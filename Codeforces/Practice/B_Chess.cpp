@@ -29,12 +29,6 @@
     cin.tie(0);                       \
     cout.tie(0)
 using namespace std;
-#include <bits/stdc++.h>
-using namespace std;
-
-#include <bits/stdc++.h>
-using namespace std;
-
 
 const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
@@ -43,38 +37,49 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    ll n;
-    char c;
-    cin >> n >> c;
-    vector<ll> c_positions;
-    vector<ll> g_positions;
-    set<ll> distances;
-    string s;
-    cin >> s;
-    s += s;
-    // cout << s << endl;
-    bool found = false;
-    int pos_c = 0;
-    int mx = 0;
-    for (int i = 0; i < s.size(); i++)
+    ll x_moves[8] = {2, 2, -2, -2, 1, 1, -1, -1};
+    ll y_moves[8] = {1, -1, 1, -1, 2, -2, 2, -2};
+    string rook, knight;
+    cin >> rook;
+    cin >> knight;
+    set<pair<ll, ll>> forbid;
+    ll x = rook[0] - 'a' + 1;
+    ll y = rook[1] - '1' + 1;
+    forbid.insert({x, y});
+    for (ll i = 0; i < 8; i++)
     {
-        if (s[i] == c && found == false)
+        ll new_x = x + x_moves[i];
+        ll new_y = y + y_moves[i];
+        if (new_x > 0 && new_x <= 8 && new_y > 0 && new_y <= 8)
         {
-            pos_c = i;
-            found = true;
-        }
-        // cout << "pos_c: " << pos_c << endl;
-        if (s[i] == 'g' && found == true)
+            forbid.insert({new_x, new_y});
+         }
+    }
+    x = knight[0] - 'a' + 1;
+    y = knight[1] - '1' + 1;
+    forbid.insert({x, y});
+    for (ll i = 0; i < 8; i++)
+    {
+        ll new_x = x + x_moves[i];
+        ll new_y = y + y_moves[i];
+        if (new_x > 0 && new_x <= 8 && new_y > 0 && new_y <= 8)
         {
-            mx = max(mx, i - pos_c);
-            found = false;
+            forbid.insert({new_x, new_y});
         }
     }
-    // debug(mx);
-    cout << mx << endl;
 
-    // ll max_distance = *max_element(distances.begin(), distances.end());
-    // cout << max_distance << endl;
+    ll k = 0;
+    for (int i = 1; i <= 8; i++)
+    {
+        for (int j = 1; j <= 8; j++)
+        {
+            if (forbid.find({j, i}) != forbid.end() || (j == rook[0] - 'a' + 1 || i == rook[1] - '1' + 1))
+                continue;
+            else
+                k++;
+        }
+    }
+    cout << k << endl;
 }
 
 signed main()
@@ -82,8 +87,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    cin >> tt;
-    while (tt--)
-        solve();
+    //   cin >> tt;
+    //   while (tt--)
+    solve();
     return 0;
 }

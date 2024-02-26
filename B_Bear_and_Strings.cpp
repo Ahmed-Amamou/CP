@@ -27,39 +27,31 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    ll n;
-    cin >> n;
-
-    map<ll, ll> numbers;
-    ll res = 0;
-    ll z = (1LL << 31) - 1;
-    // cout << "z: " << bitset<32>(z) << endl;
-    for (int i = 0; i < n; i++)
+    string s;
+    cin >> s;
+    ll n = s.size();
+    vector<int> v;
+    for (int i = 0; i + 3 < n; i++)
     {
-        ll x, y;
-        cin >> x;
-        y = z ^ x;
-        // cout << "y: " << bitset<32>(y) << endl;
-
-        if (numbers[x] != 0)
+        if (s[i] == 'b' && s[i + 1] == 'e' && s[i + 2] == 'a' && s[i + 3] == 'r')
         {
-            numbers[x]--;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
-        }
-        else
-        {
-            res++;
-            numbers[y]++;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
+            v.push_back(i + 1);
         }
     }
-    cout << res << endl;
+    ll ans = 0;
+    ll x = 1, y;
+    // cout << v.size()<<endl;
+    for (int i = 0; i < v.size(); i++)
+    { // beartxfbearf
+        y = n - v[i] - 2;
+        if (i)
+        {
+            x = v[i - 1] + 1;
+        }
+        x = v[i] - x + 1;
+        ans += x * y;
+    }
+    cout << ans << endl;
 }
 
 signed main()
@@ -67,8 +59,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    cin >> tt;
-    while (tt--)
-        solve();
+    //   cin >> tt;
+    //   while (tt--)
+    solve();
     return 0;
 }

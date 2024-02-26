@@ -29,37 +29,19 @@ void solve()
 {
     ll n;
     cin >> n;
-
-    map<ll, ll> numbers;
-    ll res = 0;
-    ll z = (1LL << 31) - 1;
-    // cout << "z: " << bitset<32>(z) << endl;
+    ll mx = -1;
+    map<ll,ll> store;
     for (int i = 0; i < n; i++)
     {
         ll x, y;
-        cin >> x;
-        y = z ^ x;
-        // cout << "y: " << bitset<32>(y) << endl;
-
-        if (numbers[x] != 0)
+        cin >> x >> y;
+        if (x <= 10)
         {
-            numbers[x]--;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
-        }
-        else
-        {
-            res++;
-            numbers[y]++;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
+            mx = max(mx, y);
+            store[y]=i;
         }
     }
-    cout << res << endl;
+    cout << store[mx]+1 << endl;
 }
 
 signed main()

@@ -18,72 +18,74 @@
 //.HHHHH.....HHHHH.HHAAA.......AAAAAA.MMMM..MMMMM..MMMMM.....OOOOOOOOOO.........OOOOOOOOOO.....DDDDDDDDDDDD......
 //...............................................................................................................
 
+
 #include <bits/stdc++.h>
 #define ll long long
 #define endl "\n"
 #define F first
 #define double long double
 #define S second
-#define FAST                          \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(0);                       \
-    cout.tie(0)
-using namespace std;
-#include <bits/stdc++.h>
-using namespace std;
-
-#include <bits/stdc++.h>
+#define FAST ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0)
 using namespace std;
 
 
 const double EPS = 0.00000001;
-const ll MOD = 1e9 + 7;
-int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
-int lcm(int a, int b) { return a * (b / gcd(a, b)); }
+const ll MOD = 1e9+7;
+int gcd (ll a, ll b) { return b ? gcd (b, a % b) : a;}
+int lcm (int a, int b) { return a * (b / gcd(a, b));}
+ 
 
 void solve()
-{
+{   
     ll n;
-    char c;
-    cin >> n >> c;
-    vector<ll> c_positions;
-    vector<ll> g_positions;
-    set<ll> distances;
-    string s;
-    cin >> s;
-    s += s;
-    // cout << s << endl;
-    bool found = false;
-    int pos_c = 0;
-    int mx = 0;
-    for (int i = 0; i < s.size(); i++)
+    cin >> n;
+
+    int a[n];
+    for (int i = 0; i < n; i++)
     {
-        if (s[i] == c && found == false)
+        cin >> a[i];
+    }
+
+    ll pref_a[n + 1] = {0};
+    for (int i = 1; i <= n; i++)
+    {
+        pref_a[i] += pref_a[i - 1] + a[i - 1];
+    }
+
+
+    sort(a, a + n);
+    ll sorted_pref_a[n + 1] = {0};
+    for (int i = 1; i <= n; i++)
+    {
+        sorted_pref_a[i] += sorted_pref_a[i - 1] + a[i - 1];
+    }
+
+
+    int m;
+    cin >> m;
+    for (int i = 0; i < m; i++)
+    {
+        int type, l, r;
+        cin >> type >> l >> r;
+        // cout << type << " " << l << " " << r << endl;
+        if (type == 1)
         {
-            pos_c = i;
-            found = true;
+            cout << pref_a[r] - pref_a[l-1] << endl;
         }
-        // cout << "pos_c: " << pos_c << endl;
-        if (s[i] == 'g' && found == true)
+        else
         {
-            mx = max(mx, i - pos_c);
-            found = false;
+            cout << sorted_pref_a[r ] - sorted_pref_a[l-1] << endl;
         }
     }
-    // debug(mx);
-    cout << mx << endl;
-
-    // ll max_distance = *max_element(distances.begin(), distances.end());
-    // cout << max_distance << endl;
 }
 
-signed main()
-{
-    FAST;
+int main()
+{   FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    cin >> tt;
-    while (tt--)
-        solve();
+    // cin >> tt;
+    // while (tt--)
+
+    solve();
     return 0;
 }

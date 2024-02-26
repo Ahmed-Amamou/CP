@@ -27,39 +27,34 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    ll n;
-    cin >> n;
-
-    map<ll, ll> numbers;
-    ll res = 0;
-    ll z = (1LL << 31) - 1;
-    // cout << "z: " << bitset<32>(z) << endl;
+    ll n, d;
+    cin >> n >> d;
+    ll a[n];
     for (int i = 0; i < n; i++)
     {
-        ll x, y;
-        cin >> x;
-        y = z ^ x;
-        // cout << "y: " << bitset<32>(y) << endl;
-
-        if (numbers[x] != 0)
-        {
-            numbers[x]--;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
-        }
-        else
-        {
-            res++;
-            numbers[y]++;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
-        }
+        cin >> a[i];
     }
-    cout << res << endl;
+    sort(a, a + n);
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cout << a[i] << " ";
+    // }
+    // cout << endl;
+    int first = a[0];
+    int count = 1;
+    for (int i = 1; i < n; i++)
+    {
+        while (a[i] - first <= d && i < n)
+        {
+            i++;
+            // cout << "a[" << i << "]: " << a[i] << endl;
+        }
+        if (i >= n)
+            break;
+        first = a[i];
+        count += 1;
+    }
+    cout << count << endl;
 }
 
 signed main()
@@ -67,8 +62,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    cin >> tt;
-    while (tt--)
-        solve();
+    //   cin >> tt;
+    //   while (tt--)
+    solve();
     return 0;
 }

@@ -24,42 +24,48 @@ const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
-
+ll bs(vector<ll> &v, ll x)
+{
+    ll res = -1;
+    ll mid;
+    ll low = 0, high = v.size() - 1;
+    while (low <= high)
+    {
+        mid = low + (high - low) / 2;
+        if (v[mid] <= x)
+        {
+            res = mid;
+            low = mid + 1;
+        }
+        else
+        {
+            high = mid - 1;
+        }
+    }
+    return res;
+}
 void solve()
 {
     ll n;
     cin >> n;
-
-    map<ll, ll> numbers;
-    ll res = 0;
-    ll z = (1LL << 31) - 1;
-    // cout << "z: " << bitset<32>(z) << endl;
+    vector<ll> a(n);
     for (int i = 0; i < n; i++)
     {
-        ll x, y;
-        cin >> x;
-        y = z ^ x;
-        // cout << "y: " << bitset<32>(y) << endl;
-
-        if (numbers[x] != 0)
-        {
-            numbers[x]--;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
-        }
-        else
-        {
-            res++;
-            numbers[y]++;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
-        }
+        cin >> a[i];
     }
-    cout << res << endl;
+    sort(a.begin(), a.end());
+    ll q;
+    cin >> q;
+    for (int i = 0; i < q; i++)
+    {
+        ll x;
+        cin >> x;
+        ll res = bs(a, x);
+        if (res != -1)
+            cout << res+1 << endl;
+        else
+            cout << 0 << endl;
+    }
 }
 
 signed main()
@@ -67,8 +73,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    cin >> tt;
-    while (tt--)
-        solve();
+    //   cin >> tt;
+    //   while (tt--)
+    solve();
     return 0;
 }

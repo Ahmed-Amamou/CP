@@ -27,39 +27,33 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    ll n;
-    cin >> n;
-
-    map<ll, ll> numbers;
-    ll res = 0;
-    ll z = (1LL << 31) - 1;
-    // cout << "z: " << bitset<32>(z) << endl;
+    ll n, k;
+    cin >> n >> k;
+    ll a[n];
     for (int i = 0; i < n; i++)
     {
-        ll x, y;
-        cin >> x;
-        y = z ^ x;
-        // cout << "y: " << bitset<32>(y) << endl;
-
-        if (numbers[x] != 0)
-        {
-            numbers[x]--;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
-        }
-        else
-        {
-            res++;
-            numbers[y]++;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
-        }
+        cin >> a[i];
     }
-    cout << res << endl;
+    // search for the longest sequence of elements that diffs don't exceed k;
+    // if (n == 1)
+    // {
+    //     cout << 0 << endl;
+    //     return;
+    // }
+    sort(a, a + n);
+    ll mx = 0;
+    ll tmp = 0;
+    for (int i = 0; i < n - 1; i++)
+    {
+        if (a[i + 1] - a[i] > k)
+        {
+            tmp = 0;
+            continue;
+        }
+        tmp++;
+        mx = max(tmp, mx);
+    }
+    cout << n - mx - 1 << endl;
 }
 
 signed main()

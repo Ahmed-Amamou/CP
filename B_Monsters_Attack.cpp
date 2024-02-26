@@ -27,39 +27,44 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    ll n;
-    cin >> n;
-
-    map<ll, ll> numbers;
-    ll res = 0;
-    ll z = (1LL << 31) - 1;
-    // cout << "z: " << bitset<32>(z) << endl;
+    ll n, k;
+    cin >> n >> k;
+    ll hp[n];
+    map<ll, ll> pos;
     for (int i = 0; i < n; i++)
     {
-        ll x, y;
+        cin >> hp[i];
+    }
+    for (int i = 0; i < n; i++)
+    {
+        ll x;
         cin >> x;
-        y = z ^ x;
-        // cout << "y: " << bitset<32>(y) << endl;
+        pos[abs(x)] += hp[i];
+    }
+    // show map
+    //  for (auto it = pos.begin(); it != pos.end(); ++it) {
+    //      cout << it->first << " : " << it->second << endl;
+    //  }
+    //  cout << "---"<<endl;
+    ll sum = 0;
+    for (auto &dddd : pos)
+    {
 
-        if (numbers[x] != 0)
+        sum += dddd.second;
+        dddd.second = sum;
+    }
+
+    bool res = true;
+    for (auto &p : pos)
+    {
+        if (p.first * k < p.second)
         {
-            numbers[x]--;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
-        }
-        else
-        {
-            res++;
-            numbers[y]++;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
+            res = false;
+            break;
         }
     }
-    cout << res << endl;
+
+    cout << (res ? "YES" : "NO") << endl;
 }
 
 signed main()

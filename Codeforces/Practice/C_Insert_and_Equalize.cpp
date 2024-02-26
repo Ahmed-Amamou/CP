@@ -29,52 +29,52 @@
     cin.tie(0);                       \
     cout.tie(0)
 using namespace std;
-#include <bits/stdc++.h>
-using namespace std;
-
-#include <bits/stdc++.h>
-using namespace std;
-
 
 const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
-void solve()
+void solve() 
 {
-    ll n;
-    char c;
-    cin >> n >> c;
-    vector<ll> c_positions;
-    vector<ll> g_positions;
-    set<ll> distances;
-    string s;
-    cin >> s;
-    s += s;
-    // cout << s << endl;
-    bool found = false;
-    int pos_c = 0;
-    int mx = 0;
-    for (int i = 0; i < s.size(); i++)
-    {
-        if (s[i] == c && found == false)
-        {
-            pos_c = i;
-            found = true;
-        }
-        // cout << "pos_c: " << pos_c << endl;
-        if (s[i] == 'g' && found == true)
-        {
-            mx = max(mx, i - pos_c);
-            found = false;
-        }
-    }
-    // debug(mx);
-    cout << mx << endl;
-
-    // ll max_distance = *max_element(distances.begin(), distances.end());
-    // cout << max_distance << endl;
+	ll n;
+	cin >> n;
+ 
+	vector<ll> v(n);
+ 
+	for(ll i=0; i < n; i++)
+		cin >> v[i];
+ 
+	ll sum = 0 , c = 0;
+ 
+	sort(v.begin(),v.end());
+ 
+	if(n == 1)
+		cout << "1" << endl;
+ 
+	else
+	{
+		for(ll i=1; i < n; i++)
+			c = __gcd(c , v[i] - v[i - 1]);
+ 
+		for(ll i=0; i < n; i++)
+			sum = sum + (v[n - 1] - v[i]) / c;
+ 
+		ll ans = v[n - 1] - c;
+ 
+		ll opr = 1;
+ 
+		for(ll i=n-2; i >= 0; i--)
+		{
+			if(ans != v[i])
+				break;
+ 
+			ans = ans - c;
+			opr++;
+		}
+ 
+		cout << sum + opr << endl;
+	}
 }
 
 signed main()

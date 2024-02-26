@@ -29,37 +29,30 @@ void solve()
 {
     ll n;
     cin >> n;
-
-    map<ll, ll> numbers;
-    ll res = 0;
-    ll z = (1LL << 31) - 1;
-    // cout << "z: " << bitset<32>(z) << endl;
+    set<int> numbers;
     for (int i = 0; i < n; i++)
     {
-        ll x, y;
+        int x;
         cin >> x;
-        y = z ^ x;
-        // cout << "y: " << bitset<32>(y) << endl;
-
-        if (numbers[x] != 0)
-        {
-            numbers[x]--;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
-        }
-        else
-        {
-            res++;
-            numbers[y]++;
-            for (const auto &num : numbers)
-            {
-                cout << bitset<32>(num.first) << ": " << num.second << endl;
-            }
-        }
+        numbers.insert(x);
     }
-    cout << res << endl;
+
+    ll A, B;
+    if (numbers.size() != n)
+    {
+        A = 0;
+        B = pow(6, (4 - n));
+    }
+    else
+    {
+        A = 1;
+        for (int i = 6 - n; i >= 3; i--)
+        {
+            A *= i;
+        }
+        B = pow(6, (4 - n)) - A;
+    }
+    cout << A << " " << B << endl;
 }
 
 signed main()
@@ -67,8 +60,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    cin >> tt;
-    while (tt--)
-        solve();
+    //   cin >> tt;
+    //   while (tt--)
+    solve();
     return 0;
 }

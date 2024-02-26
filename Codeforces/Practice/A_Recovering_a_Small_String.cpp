@@ -29,12 +29,6 @@
     cin.tie(0);                       \
     cout.tie(0)
 using namespace std;
-#include <bits/stdc++.h>
-using namespace std;
-
-#include <bits/stdc++.h>
-using namespace std;
-
 
 const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
@@ -43,38 +37,28 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    ll n;
-    char c;
-    cin >> n >> c;
-    vector<ll> c_positions;
-    vector<ll> g_positions;
-    set<ll> distances;
-    string s;
-    cin >> s;
-    s += s;
-    // cout << s << endl;
-    bool found = false;
-    int pos_c = 0;
-    int mx = 0;
-    for (int i = 0; i < s.size(); i++)
+    vector<char> alphabets;
+    alphabets.push_back('!');
+    for (char c = 'a'; c <= 'z'; c++)
     {
-        if (s[i] == c && found == false)
-        {
-            pos_c = i;
-            found = true;
-        }
-        // cout << "pos_c: " << pos_c << endl;
-        if (s[i] == 'g' && found == true)
-        {
-            mx = max(mx, i - pos_c);
-            found = false;
-        }
+        alphabets.push_back(c);
     }
-    // debug(mx);
-    cout << mx << endl;
+    int n;
+    cin >> n;
+    if (n <= 28)
+    {
 
-    // ll max_distance = *max_element(distances.begin(), distances.end());
-    // cout << max_distance << endl;
+        cout << "aa" << alphabets[n - 2] << endl;
+        return;
+    }
+    if (n <= 53)
+    {
+        n -= 26;
+        cout << "a" << alphabets[n - 1] << "z" << endl;
+        return;
+    }
+    n -= 53;
+    cout << alphabets[n +1] << "zz" << endl;
 }
 
 signed main()
