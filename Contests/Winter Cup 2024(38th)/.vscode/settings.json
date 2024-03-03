@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "*.py": "python",
+        "iostream": "cpp",
+        "cstdlib": "cpp",
+        "bitset": "cpp",
+        "chrono": "cpp",
+        "algorithm": "cpp"
+    }
+}
