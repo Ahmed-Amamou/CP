@@ -35,38 +35,6 @@ const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
-pair<ll, ll> countContiguousEquals(const vector<ll> &vec)
-{
-    ll pointer1 = 0, pointer2 = vec.size() - 1;
-    // Count contiguous equals from the left
-    for (int i = 0; i < vec.size(); i++)
-    {
-        if (vec[i] == vec[i - 1])
-        {
-            pointer1++;
-        }
-        else
-        {
-            break;
-        }
-    }
-
-    // Count contiguous equals from the right
-    for (int i = vec.size() - 1; i >= 0; i--)
-    {
-        if (vec[i] == vec[i + 1])
-        {
-            pointer2--;
-        }
-        else
-        {
-            break;
-        }
-    }
-
-    return make_pair(pointer1, pointer2);
-}
-
 void solve()
 {
     ll n;
@@ -77,37 +45,54 @@ void solve()
         cin >> a[i];
     }
     bool flag = false;
-    for (int i = 1; i < n; i++)
-    {
-        if (a[i] != a[0])
-        {
-            flag = true;
-            break;
-        }
-    }
-    if (!flag || n == 1)
+    unordered_set<ll> uniqueElements(a.begin(), a.end());
+    if (uniqueElements.size() == 1)
     {
         cout << 0 << endl;
         return;
     }
-    pair<ll, ll> pair = countContiguousEquals(a);
-    // cout << pair.first << " " << pair.second << endl;
-    if (a.front() != a.back())
+    ll l = 0, r = a.size() - 1;
+    int ans_l = 1, ans_r = 1;
+    while (true)
     {
-        cout << min(a.size() - pair.first, pair.second + 1) << endl;
+        if (a[l] == a[l + 1])
+        {
+            l++;
+            ans_l++;
+        }
+        else
+        {
+            break;
+        }
     }
-    else
+    while (true)
     {
-        cout << max(pair.second - pair.first + 1, 0LL) << endl;
+        if (a[r] == a[r - 1])
+        {
+            r--;
+            ans_r++;
+        }
+        else
+        {
+            break;
+        }
     }
+    if (a[0] == a[n - 1])
+    {
+        cout << a.size() - ans_l - ans_r << endl;
+        return;
+    }
+    // cout << "mx: " << mx << endl;
+    cout << a.size() - max(ans_l, ans_r) << endl;
 }
-    signed main()
-    {
-        FAST;
-        ll tt = 1;
-        // freopen("input.in", "r", stdin);
-        cin >> tt;
-        while (tt--)
-            solve();
-        return 0;
-    }
+
+signed main()
+{
+    FAST;
+    ll tt = 1;
+    // freopen("input.in", "r", stdin);
+    cin >> tt;
+    while (tt--)
+        solve();
+    return 0;
+}

@@ -21,31 +21,45 @@
 using namespace std;
 
 const double EPS = 0.00000001;
-const ll MOD = 998244353;
+const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
-int C[4001][4001];
+
+void solve()
+{
+    ll k, n;
+    cin >> k >> n;
+    vector<ll> ans = {1};
+    int diff = 1;
+    for (int i = 2; i <= k; i++)
+    {
+        ll next = ans.back() + diff;
+        ll remaining = k - i;
+        ll poss = n - next;
+        if(remaining <= poss){
+            ans.push_back(next);
+            diff++;
+        } 
+        else{
+            ans.push_back(ans.back()+1);
+        }
+    }
+    for (auto& i : ans)
+    {
+            cout << i << " ";
+    }
+    cout << endl;
+    
+    
+}
+
 signed main()
 {
     FAST;
     ll tt = 1;
-    // cout << "HH" << endl;
-    int n;
-    cin >> n;
-
-    C[1][1] = 1;
-    C[1][0] = 1;
-
-    for (int i = 2; i < 4001; i++)
-    {
-        C[i][0] = 1;
-        for (int j = 1; j <= i; j++)
-        {
-            C[i][j] = (C[i - 1][j - 1] + C[i - 1][j]) % MOD;
-        }
-    }
-    
-
-    cout << C[n][n / 2] << endl;
+    // freopen("input.in", "r", stdin);
+    cin >> tt;
+    while (tt--)
+        solve();
     return 0;
 }

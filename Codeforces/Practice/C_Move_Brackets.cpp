@@ -21,31 +21,54 @@
 using namespace std;
 
 const double EPS = 0.00000001;
-const ll MOD = 998244353;
+const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
-int C[4001][4001];
+
+void solve()
+{
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+    int ans = 0;
+    vector<pair<ll, ll>> v(n + 1, {0, 0});
+    // v.push_back({0, 0});
+    for (int i = 0; i < s.size(); i++)
+    {
+        if (s[i] == '(')
+        {
+            v[i+1].first = v[i ].first + 1;
+            v[i+1].second = v[i].second;
+            if (v[i+1].first - v[i+1].second < 0)
+            {
+                ans++;
+                v[i].first = 0;
+                v[i].second = 0;
+            }
+        }
+        else
+        {
+            v[i+1].second = v[i].second + 1;
+            v[i+1].first = v[i].first;
+            if (v[i+1].first - v[i+1].second < 0)
+            {
+                ans++;
+                v[i+1].first = 0;
+                v[i+1].second = 0;
+            }
+        }
+    }
+    cout << ans << endl;
+}
+
 signed main()
 {
     FAST;
     ll tt = 1;
-    // cout << "HH" << endl;
-    int n;
-    cin >> n;
-
-    C[1][1] = 1;
-    C[1][0] = 1;
-
-    for (int i = 2; i < 4001; i++)
-    {
-        C[i][0] = 1;
-        for (int j = 1; j <= i; j++)
-        {
-            C[i][j] = (C[i - 1][j - 1] + C[i - 1][j]) % MOD;
-        }
-    }
-    
-
-    cout << C[n][n / 2] << endl;
+    // freopen("input.in", "r", stdin);
+    cin >> tt;
+    while (tt--)
+        solve();
     return 0;
 }

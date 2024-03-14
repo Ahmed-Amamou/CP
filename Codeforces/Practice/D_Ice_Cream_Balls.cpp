@@ -21,31 +21,62 @@
 using namespace std;
 
 const double EPS = 0.00000001;
-const ll MOD = 998244353;
+const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
-int C[4001][4001];
+
+// void solve(){
+
+// }
+ll combination(ll n)
+{
+    return (n * (n - 1)) / 2;
+}
+
 signed main()
 {
     FAST;
     ll tt = 1;
-    // cout << "HH" << endl;
-    int n;
-    cin >> n;
-
-    C[1][1] = 1;
-    C[1][0] = 1;
-
-    for (int i = 2; i < 4001; i++)
+    // freopen("input.in", "r", stdin);
+    cin >> tt;
+    while (tt--)
     {
-        C[i][0] = 1;
-        for (int j = 1; j <= i; j++)
+        ll n;
+        cin >> n;
+        if (n == 1)
         {
-            C[i][j] = (C[i - 1][j - 1] + C[i - 1][j]) % MOD;
+            cout << 2 << endl;
+            continue;
         }
+        if (n == 2)
+        {
+            cout << 3 << endl;
+            continue;
+        }
+        ll low = 3;
+        ll high = 2648956421;
+        ll res = 3;
+        // for (int i = 3; i < 2648956421; i++)
+        // {
+        //     cout << combination(i)<<" ";
+        // }
+        // cout << endl;
+        while (low <= high)
+        {
+            ll mid = low + (high - low) / 2;
+            if (combination(mid) <= n)
+            {
+                res = mid;
+                low = mid + 1;
+            }
+            else
+            {
+                high = mid - 1;
+            }
+        }
+        ll bal = combination(res);
+        ll ans = n - bal;
+        cout << res + ans << endl;
     }
-    
-
-    cout << C[n][n / 2] << endl;
     return 0;
 }

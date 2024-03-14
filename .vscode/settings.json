@@ -1,8 +1,8 @@
 {
     "files.associations": {
+        "*.py": "python",
         "*.excalidraw": "json",
         "*.excalidrawlib": "json",
-        "*.py": "python",
         "iostream": "cpp",
         "random": "cpp",
         "string": "cpp",
@@ -70,7 +70,9 @@
         "thread": "cpp",
         "typeindex": "cpp",
         "typeinfo": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "rope": "cpp",
+        "slist": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
