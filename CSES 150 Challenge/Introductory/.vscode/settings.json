@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "*.py": "python",
+        "cmath": "cpp",
+        "complex": "cpp",
+        "iostream": "cpp",
+        "array": "cpp",
+        "bitset": "cpp",
+        "initializer_list": "cpp",
+        "regex": "cpp",
+        "utility": "cpp",
+        "valarray": "cpp",
+        "random": "cpp"
+    }
+}
