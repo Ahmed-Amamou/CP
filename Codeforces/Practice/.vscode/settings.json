@@ -1,9 +1,10 @@
 {
     "files.associations": {
+        "*.py": "python",
         "*.excalidraw": "json",
         "*.excalidrawlib": "json",
-        "*.py": "python",
         "iostream": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "array": "cpp"
     }
 }
