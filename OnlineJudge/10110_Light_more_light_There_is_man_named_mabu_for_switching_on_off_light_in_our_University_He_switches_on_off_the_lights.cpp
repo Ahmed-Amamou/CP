@@ -17,31 +17,7 @@ vector<int> adj[N];
 bool vis[N][2];
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
-ll calculate_sum_of_digits(ll n)
-{
-    ll sum = n % 10;
-    ll k = 100;
-    while (n / k != 0)
-    {
-        sum += (n % k) / (k / 10);
-        k *= 10;
-    }
 
-    return sum += (n % k) / (k / 10);
-}
-bool is_prime(int n)
-{
-    int sum = 0;
-    for (int i = 1; i <= n; i++)
-    {
-        if (n % i == 0)
-            sum++;
-    }
-    if (sum > 2)
-        return false;
-    else
-        return true;
-}
 void solve()
 {
     ll n;
@@ -49,7 +25,13 @@ void solve()
     // we want to know if the divisors of n are odd or even
     while (true)
     {
-        
+        cin >> n;
+        if (n == 0)
+        {
+            return;
+        }
+        ll x = (int)sqrt(n);
+        cout << (x*x == n?"yes":"no")<<endl;
     }
 }
 
