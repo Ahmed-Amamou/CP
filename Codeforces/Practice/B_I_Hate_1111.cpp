@@ -25,17 +25,24 @@ const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
+// X = (A+C*111)*11 + D * 111 , D<11 we try all D values if none work res = "NO"
+bool dp[1100] = {false};
 void solve()
 {
-    int n;
+    ll n;
     cin >> n;
-    vector<vector<int>> edges = {{0,1},{1,2},{2,0}};
-    vector<int> v[n];
-    for (int i = 0; i < edges.size(); i++)
+    for (int i = 0; i < 11; i++)
     {
-        v[edges[i][0]].push_back(edges[i][1]);
-        v[edges[i][1]].push_back(edges[i][0]);
+        if(n%11 == 0){
+            cout << "YES"<<endl;
+            return;
+        }
+        n-=111;
+        if(n<0)
+        break;
+         
     }
+    cout << "NO"<<endl;
     
 }
 
@@ -43,9 +50,10 @@ signed main()
 {
     FAST;
     ll tt = 1;
-    // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
-    solve();
+    
+
+    cin >> tt;
+    while (tt--)
+        solve();
     return 0;
 }

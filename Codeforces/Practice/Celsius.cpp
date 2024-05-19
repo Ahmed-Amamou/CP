@@ -27,16 +27,23 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<vector<int>> edges = {{0,1},{1,2},{2,0}};
-    vector<int> v[n];
-    for (int i = 0; i < edges.size(); i++)
-    {
-        v[edges[i][0]].push_back(edges[i][1]);
-        v[edges[i][1]].push_back(edges[i][0]);
-    }
-    
+    string input;
+    cin >> input;
+
+    size_t pos = input.find('/');
+    string num1 = input.substr(0, pos);
+    string num2 = input.substr(pos + 1);
+
+    int number1 = stoi(num1);
+    int number2 = stoi(num2);
+    int constante = 32 * number2;
+    number1 -= constante;
+    number1 *= 5;
+    number2 *= 9;
+    int x = gcd(abs(number1), abs(number2));
+    number1 /= x;
+    number2 /= x;
+    cout << number1 << "/" << number2 << endl;
 }
 
 signed main()
@@ -44,8 +51,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
+    //   cin >> tt;
+    //   while (tt--)
     solve();
     return 0;
 }

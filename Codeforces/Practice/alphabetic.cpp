@@ -27,16 +27,27 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<vector<int>> edges = {{0,1},{1,2},{2,0}};
-    vector<int> v[n];
-    for (int i = 0; i < edges.size(); i++)
+    string s;
+    cin >> s;
+    ll mx = 0;
+    for (int i = 0; i < s.size(); i++)
     {
-        v[edges[i][0]].push_back(edges[i][1]);
-        v[edges[i][1]].push_back(edges[i][0]);
+        char local = s[i];
+        ll local_max = 1;
+        for (int j = i + 1; j < s.size(); j++)
+        {
+            if ((s[j] - local) > 0)
+            {
+                local_max++;
+                cout << local_max<<endl;
+                cout << local<<" "<<s[j]<<endl;
+                local = s[j];
+            }
+        }
+        mx = max(local_max, mx);
+        cout << "max from "<<s[i]<<": "<<local_max<<endl;
     }
-    
+    cout << 26 - mx << endl;
 }
 
 signed main()
@@ -44,8 +55,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
+    //   cin >> tt;
+    //   while (tt--)
     solve();
     return 0;
 }

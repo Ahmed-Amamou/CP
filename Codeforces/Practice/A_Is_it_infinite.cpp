@@ -24,19 +24,35 @@ const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
-
+const int mmax = 1000000;
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<vector<int>> edges = {{0,1},{1,2},{2,0}};
-    vector<int> v[n];
-    for (int i = 0; i < edges.size(); i++)
+    ll u, v, M;
+    cin >> u >> v >> M;
+    ll x = u, y = v;
+    ll p;
+    ll cnt = 1;
+    vector<int>  nums(M+1,-1);
+    for (int i = 0; i < mmax; i++)
     {
-        v[edges[i][0]].push_back(edges[i][1]);
-        v[edges[i][1]].push_back(edges[i][0]);
+        p = (x + y) % M;
+        if(nums[p]==-1){
+            nums[p]=cnt;
+            cnt++;
+        }
+        x = (p * u) % M;
+        y = (p * v) % M;
     }
-    
+    // cout << "nums set: ";
+    // for (auto num : nums)
+    // {
+    //     cout << num << " ";
+    // }
+    // cout << endl;
+    for (int i = 0; i < M; i++)
+    {
+        cout << nums[i]<<" ";
+    }
 }
 
 signed main()
@@ -44,8 +60,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
+    //   cin >> tt;
+    //   while (tt--)
     solve();
     return 0;
 }

@@ -27,16 +27,58 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    int n;
+    ll n;
     cin >> n;
-    vector<vector<int>> edges = {{0,1},{1,2},{2,0}};
-    vector<int> v[n];
-    for (int i = 0; i < edges.size(); i++)
+    vector<int> a(n);
+    for (int i = 0; i < n; i++)
     {
-        v[edges[i][0]].push_back(edges[i][1]);
-        v[edges[i][1]].push_back(edges[i][0]);
+        cin >> a[i];
     }
-    
+    sort(a.begin(), a.end());
+    ll res = 1;
+    if (a[n - 1] < 0)
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            res *= a[i];
+        }
+        cout << res << endl;
+    }
+    else if (a[n - 1] == 0)
+    {
+        cout << 0 << endl;
+    }
+    else
+    {
+        // for (int i = 0; i < n; i++)
+        // {
+        //     cout << a[i] << " ";
+        // }
+        // cout << endl;
+
+        res = a[n - 1];
+        n -= 1;
+        int count = 1;
+        int k = 0;
+        while (count < 5)
+        {
+            if (a[n - 1] * a[n - 2] >= a[k] * a[k + 1])
+            {
+                // cout << "a li5ra " << a[n - 1] << endl;
+                res *= a[n - 1] * a[n - 2];
+                a.pop_back();
+                a.pop_back();
+                n -= 2;
+            }
+            else
+            {
+                res *= a[k] * a[k + 1];
+                k += 2;
+            }
+            count+=2;
+        }
+        cout << res << endl;
+    }
 }
 
 signed main()
@@ -44,8 +86,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
-    solve();
+    cin >> tt;
+    while (tt--)
+        solve();
     return 0;
 }

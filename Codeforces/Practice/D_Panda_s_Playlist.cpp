@@ -29,14 +29,29 @@ void solve()
 {
     int n;
     cin >> n;
-    vector<vector<int>> edges = {{0,1},{1,2},{2,0}};
-    vector<int> v[n];
-    for (int i = 0; i < edges.size(); i++)
+    ll a[n];
+    ll pair = 0, imp = 0;
+    for (int i = 0; i < n; i++)
     {
-        v[edges[i][0]].push_back(edges[i][1]);
-        v[edges[i][1]].push_back(edges[i][0]);
+        cin >> a[i];
+        if (a[i] % 2)
+            imp++;
+        else
+            pair++;
     }
-    
+    if (imp == pair)
+    {
+        // cout << "Tets"<<endl;
+        cout << 0 << endl;
+    }
+    else if (imp > pair)
+    {
+        cout << abs(pair - imp) / 2 << endl;
+    }
+    else
+    {
+        cout << abs(pair - imp) / 2 << endl;
+    }
 }
 
 signed main()
@@ -44,8 +59,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
+    //   cin >> tt;
+    //   while (tt--)
     solve();
     return 0;
 }

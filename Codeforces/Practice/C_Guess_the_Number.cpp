@@ -18,6 +18,7 @@
     ios_base::sync_with_stdio(false); \
     cin.tie(0);                       \
     cout.tie(0)
+#define debug(x) cout << #x << "-" << x << endl;
 using namespace std;
 
 const double EPS = 0.00000001;
@@ -29,14 +30,57 @@ void solve()
 {
     int n;
     cin >> n;
-    vector<vector<int>> edges = {{0,1},{1,2},{2,0}};
-    vector<int> v[n];
-    for (int i = 0; i < edges.size(); i++)
+    ll lo = 1, hi = n;
+    ll mid;
+    while (abs(lo - hi) > 1)
     {
-        v[edges[i][0]].push_back(edges[i][1]);
-        v[edges[i][1]].push_back(edges[i][0]);
+        mid = (lo + hi) / 2;
+        // debug(lo);
+        // debug(mid);
+        // debug(hi);
+        // debug("----");
+        cout << mid << endl;
+        cout.flush();
+
+        string ele;
+        cin >> ele;
+
+        if (ele == "<")
+        {
+            hi = mid - 1;
+        }
+        else if (ele == ">=")
+        {
+            lo = mid;
+        }
     }
-    
+    mid = (lo + hi) / 2;
+
+    if (lo == hi)
+    {
+        cout << "! " << mid << endl;
+        cout.flush();
+        return;
+    }
+    else
+    {
+        cout << hi << endl;
+        cout.flush();
+
+        string ele;
+        cin >> ele;
+
+        if (ele == "<")
+        {
+            cout << "! " << lo << endl;
+            cout.flush();
+        }
+        else if (ele == ">=")
+        {
+            cout << "! " << hi << endl;
+            cout.flush();
+        }
+    }
 }
 
 signed main()
@@ -44,8 +88,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
+    //   cin >> tt;
+    //   while (tt--)
     solve();
     return 0;
 }

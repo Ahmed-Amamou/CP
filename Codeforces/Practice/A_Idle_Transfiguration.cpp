@@ -29,14 +29,44 @@ void solve()
 {
     int n;
     cin >> n;
-    vector<vector<int>> edges = {{0,1},{1,2},{2,0}};
-    vector<int> v[n];
-    for (int i = 0; i < edges.size(); i++)
+    int gridinput[n][n];
+    for (int i = 0; i < n; i++)
     {
-        v[edges[i][0]].push_back(edges[i][1]);
-        v[edges[i][1]].push_back(edges[i][0]);
+        for (int j = 0; j < n; j++)
+        {
+            cin >> gridinput[i][j];
+        }
     }
-    
+
+    int grid1[n][n];
+    int grid2[n][n];
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            if (((i + j) % 2))
+            {
+
+                grid1[i][j] = 0;
+                grid2[i][j] = 1;
+            }
+            else
+            {
+                grid1[i][j] = 1;
+                grid2[i][j] = 0;
+            }
+        }
+    }
+    ll count1 = 0;
+    ll count2 = 0;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            gridinput[i][j] == grid1[i][j] ? count1++ : count2++;
+        }
+    }
+    cout << min(count1, count2) << endl;
 }
 
 signed main()

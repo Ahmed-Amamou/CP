@@ -27,16 +27,16 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    int n;
+    ll n;
     cin >> n;
-    vector<vector<int>> edges = {{0,1},{1,2},{2,0}};
-    vector<int> v[n];
-    for (int i = 0; i < edges.size(); i++)
+    ll sum = 0;
+    for (int i = 0; i < n; i++)
     {
-        v[edges[i][0]].push_back(edges[i][1]);
-        v[edges[i][1]].push_back(edges[i][0]);
+        ll x;
+        cin >> x;
+        sum += x;
     }
-    
+    cout << sum;
 }
 
 signed main()
@@ -46,6 +46,6 @@ signed main()
     // freopen("input.in", "r", stdin);
     // cin >> tt;
     // while (tt--)
-    solve();
+        solve();
     return 0;
 }

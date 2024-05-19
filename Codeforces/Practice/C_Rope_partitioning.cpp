@@ -27,16 +27,14 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<vector<int>> edges = {{0,1},{1,2},{2,0}};
-    vector<int> v[n];
-    for (int i = 0; i < edges.size(); i++)
+    int n, a, b, K;
+    cin >> n >> a >> b >> K;
+    if ((double)n / (double)K <= (double)b && (double)n / (double)K >= (double)a)
     {
-        v[edges[i][0]].push_back(edges[i][1]);
-        v[edges[i][1]].push_back(edges[i][0]);
+        cout << "YES" << endl;
     }
-    
+    else
+        cout << "NO" << endl;
 }
 
 signed main()
@@ -44,8 +42,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
-    solve();
+    cin >> tt;
+    while (tt--)
+        solve();
     return 0;
 }

@@ -25,18 +25,29 @@ const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
+bool isInteger(double x, double epsilon = 1e-10)
+{
+    return abs(x - round(x)) < epsilon;
+}
+
 void solve()
 {
     int n;
     cin >> n;
-    vector<vector<int>> edges = {{0,1},{1,2},{2,0}};
-    vector<int> v[n];
-    for (int i = 0; i < edges.size(); i++)
+    if (n < 7)
     {
-        v[edges[i][0]].push_back(edges[i][1]);
-        v[edges[i][1]].push_back(edges[i][0]);
+        cout << "NO" << endl;
+        return;
     }
-    
+    for (int k = 2; k <= 1002; k++)
+    {
+        if (isInteger((log(n * (k - 1) + 1)) / log(k)) && (log(n * (k - 1) + 1)) / log(k) > 2.0)
+        {
+            cout << "YES" << endl;
+            return;
+        }
+    }
+    cout << "NO" << endl;
 }
 
 signed main()
@@ -44,8 +55,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
-    solve();
+    cin >> tt;
+    while (tt--)
+        solve();
     return 0;
 }

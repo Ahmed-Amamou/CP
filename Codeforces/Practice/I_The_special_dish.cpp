@@ -25,18 +25,50 @@ const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
+int nCr(int n, int r)
+{
+    if (n < r)
+        return 0;
+
+    if (r == 0)
+        return 1;
+
+    return n * nCr(n - 1, r - 1) / r;
+}
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<vector<int>> edges = {{0,1},{1,2},{2,0}};
-    vector<int> v[n];
-    for (int i = 0; i < edges.size(); i++)
+    int n, x;
+    cin >> n >> x;
+    vector<int> inp = vector<int>(n);
+    map<int, int> mp = map<int, int>();
+    ll count = 0;
+    for (int i = 0; i < n; i++)
     {
-        v[edges[i][0]].push_back(edges[i][1]);
-        v[edges[i][1]].push_back(edges[i][0]);
+        int c;
+        cin >> c;
+        inp[i] = c & x;
+        if (mp.find(inp[i]) != mp.end())
+        {
+            mp[inp[i]]++;
+        }
+        else
+        {
+            mp[inp[i]] = 1;
+        }
     }
-    
+    for (auto it = mp.begin(); it != mp.end(); it++)
+    {
+        // cout << it->first << " " << it->second << endl;
+        if (it->second > 1)
+        {
+            count += it->second * it->second;
+        }
+        else
+        {
+            count += 1;
+        }
+    }
+    cout << count;
 }
 
 signed main()
@@ -44,8 +76,6 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
     solve();
     return 0;
 }
