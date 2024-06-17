@@ -27,12 +27,43 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    int n;
-    cin >> n;
-    int x = (1 << n) - 1;
-    int y = ~x;
-    cout << x << endl;
-    cout << y << endl;
+    int n, f, k;
+    cin >> n >> f >> k;
+    vector<int> cubes(n);
+
+    for (int i = 0; i < n; i++)
+    {
+        cin >> cubes[i];
+    }
+
+    int fav = cubes[f - 1];
+
+    sort(cubes.rbegin(), cubes.rend());
+    if (cubes[k - 1] > fav)
+    {
+        cout << "NO" << endl;
+    }
+    else if (cubes[k - 1] < fav)
+    {
+        cout << "YES" << endl;
+    }
+    else
+    {
+        if (k == n)
+        {
+            cout << "YES" << endl;
+        }
+        else
+        {
+            if (cubes[k] == fav)
+            {
+                cout << "MAYBE" << endl;
+            }
+            else{
+                cout << "YES"<<endl;
+            }
+        }
+    }
 }
 
 signed main()
@@ -40,8 +71,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
-    solve();
+    cin >> tt;
+    while (tt--)
+        solve();
     return 0;
 }

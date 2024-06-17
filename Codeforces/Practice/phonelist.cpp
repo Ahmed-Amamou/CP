@@ -29,10 +29,15 @@ void solve()
 {
     int n;
     cin >> n;
-    int x = (1 << n) - 1;
-    int y = ~x;
-    cout << x << endl;
-    cout << y << endl;
+    for (int i = 0; i < n; i++)
+    {
+        ll x;
+        cin >> x;    
+    }
+    cout << n <<endl;
+    
+
+    
 }
 
 signed main()
@@ -40,8 +45,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
-    solve();
+    cin >> tt;
+    while (tt--)
+        solve();
     return 0;
 }

@@ -18,7 +18,9 @@
     ios_base::sync_with_stdio(false); \
     cin.tie(0);                       \
     cout.tie(0)
+
 using namespace std;
+#define debug(x) cout << #x << ": " << x << endl;
 
 const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
@@ -27,12 +29,21 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    int n;
-    cin >> n;
-    int x = (1 << n) - 1;
-    int y = ~x;
-    cout << x << endl;
-    cout << y << endl;
+    // int n, m;
+    // cin >> n >> m;
+    // if (n / m >= 150)
+    // {
+    //     cout << "VERY HAPPY" << endl;
+    // }
+    // else if (n / m >= 100)
+    // {
+    //     cout << "HAPPY" << endl;
+    // }
+    // else
+    // {
+    //     cout << "SAD" << endl;
+    // }
+    cout << gcd(14, 77) << endl;
 }
 
 signed main()

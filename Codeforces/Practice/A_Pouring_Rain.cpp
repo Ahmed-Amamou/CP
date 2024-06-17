@@ -24,15 +24,19 @@ const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
-
+const double pi = 3.14159265358979323846;
 void solve()
 {
-    int n;
-    cin >> n;
-    int x = (1 << n) - 1;
-    int y = ~x;
-    cout << x << endl;
-    cout << y << endl;
+    int d, h, v, e;
+    cin >> d >> h >> v >> e;
+    double decrease = (4.0 * v) / (pi * d * d);
+    if (decrease < e)
+        cout << "NO" << endl;
+    else
+    {
+        cout << "YES" << endl;
+        cout << fixed << setprecision(12) << h / (decrease - e) << endl;
+    }
 }
 
 signed main()
@@ -40,8 +44,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
+    //   cin >> tt;
+    //   while (tt--)
     solve();
     return 0;
 }

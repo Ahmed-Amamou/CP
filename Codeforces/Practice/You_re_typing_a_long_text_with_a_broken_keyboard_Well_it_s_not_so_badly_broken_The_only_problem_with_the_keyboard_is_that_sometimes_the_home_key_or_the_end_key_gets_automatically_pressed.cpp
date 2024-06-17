@@ -27,21 +27,45 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    int n;
-    cin >> n;
-    int x = (1 << n) - 1;
-    int y = ~x;
-    cout << x << endl;
-    cout << y << endl;
+    string s;
+
+    while (getline(cin, s))
+    {
+        list<char> result;
+        auto it = result.begin();
+        for (char c : s)
+        {   
+    
+            if (c == '[')
+            {
+                it = result.begin();
+            }
+            else if (c == ']')
+            {
+                it = result.end();
+            }
+            else
+            {
+                result.insert(it, c);
+                // it++;
+            }
+        }
+        for(char c : result){
+            cout << c ;
+        }
+        cout << endl;
+    }
 }
 
 signed main()
 {
+    // cout << "Hello" << endl;
     FAST;
     ll tt = 1;
+
     // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
+    //   cin >> tt;
+    //   while (tt--)
     solve();
     return 0;
 }

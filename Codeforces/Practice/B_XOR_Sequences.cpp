@@ -27,21 +27,29 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    int n;
-    cin >> n;
-    int x = (1 << n) - 1;
-    int y = ~x;
-    cout << x << endl;
-    cout << y << endl;
+    int x, y;
+    cin >> x >> y;
+    int xorValue = x ^ y;
+    int index = 0;
+    while (xorValue > 0)
+    {
+        if (xorValue & 1)
+        {
+            cout << (1 << index) << endl;
+            break;
+        }
+        xorValue >>= 1;
+        index++;
+    }
 }
-
+    
 signed main()
 {
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
-    solve();
+    cin >> tt;
+    while (tt--)
+        solve();
     return 0;
 }

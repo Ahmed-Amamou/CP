@@ -18,7 +18,9 @@
     ios_base::sync_with_stdio(false); \
     cin.tie(0);                       \
     cout.tie(0)
+
 using namespace std;
+#define debug(x) cout << #x << ": " << x << endl;
 
 const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
@@ -27,12 +29,14 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    int n;
-    cin >> n;
-    int x = (1 << n) - 1;
-    int y = ~x;
-    cout << x << endl;
-    cout << y << endl;
+    int a, z, e, r, f;
+    cin >> a >> z >> e >> r >> f;
+    int count = 0;
+    for (int i = 1; i <= f; i++)
+    {
+        count += (!(i % a) || !(i % z) || !(i % e) || !(i % r) ? 1 : 0);
+    }
+    cout << count << endl;
 }
 
 signed main()
@@ -40,8 +44,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
+    //   cin >> tt;
+    //   while (tt--)
     solve();
     return 0;
 }

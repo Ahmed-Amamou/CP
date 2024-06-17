@@ -27,12 +27,32 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    int n;
-    cin >> n;
-    int x = (1 << n) - 1;
-    int y = ~x;
-    cout << x << endl;
-    cout << y << endl;
+    int m, n;
+    cin >> m >> n;
+    map<string, int> mp;
+    for (int i = 0; i < m; i++)
+    {
+        string s;
+        ll dollar;
+        cin >> s >> dollar;
+        mp[s] = dollar;
+        // cout << mp[s] << endl;
+    }
+    for (int i = 0; i < n; i++)
+    {
+        ll sum = 0;
+        while (true)
+        {
+            string word;
+            cin >> word;
+            if (word == ".")
+            {
+                break;
+            }
+            sum += mp[word];
+        }
+        cout << sum << endl;
+    }
 }
 
 signed main()
@@ -40,8 +60,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
+    //   cin >> tt;
+    //   while (tt--)
     solve();
     return 0;
 }

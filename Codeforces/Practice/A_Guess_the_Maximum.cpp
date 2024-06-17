@@ -29,10 +29,17 @@ void solve()
 {
     int n;
     cin >> n;
-    int x = (1 << n) - 1;
-    int y = ~x;
-    cout << x << endl;
-    cout << y << endl;
+    int a[n];
+    for (int i = 0; i < n; i++)
+    {
+        cin >> a[i];
+    }
+    int mx = max(a[0], a[1]);
+    for (int i = 1; i < n - 1; i++)
+    {
+        mx = min(mx, max(a[i], a[i + 1]));
+    }
+    cout << mx - 1 << endl;
 }
 
 signed main()
@@ -40,8 +47,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
-    solve();
+    cin >> tt;
+    while (tt--)
+        solve();
     return 0;
 }
