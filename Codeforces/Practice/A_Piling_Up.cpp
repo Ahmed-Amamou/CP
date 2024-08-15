@@ -18,7 +18,9 @@
     ios_base::sync_with_stdio(false); \
     cin.tie(0);                       \
     cout.tie(0)
+
 using namespace std;
+#define debug(x) cout << #x << ": " << x << endl;
 
 const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
@@ -29,19 +31,17 @@ void solve()
 {
     int n;
     cin >> n;
-    vector<pair<int, int>> v;
-    for (int i = 0; i < n; i++)
+    if (n <= 99 && n >= 1)
     {
-        int x, y;
-        cin >> x >> y;
-        v.push_back(make_pair(x, y));
+        cout << 100 - n << endl;
     }
-    sort(v.begin(), v.end(), [&](pair<int, int> a, pair<int, int> b)
-         { return a.second < b.second; });
-    cout << "---" << endl;
-    for (auto ele : v)
+    else if (n <= 199 && n >= 100)
     {
-        cout << ele.first << " " << ele.second << endl;
+        cout << 200 - n << endl;
+    }
+    else
+    {
+        cout << 300 - n << endl;
     }
 }
 

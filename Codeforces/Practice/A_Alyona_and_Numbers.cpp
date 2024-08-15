@@ -18,7 +18,9 @@
     ios_base::sync_with_stdio(false); \
     cin.tie(0);                       \
     cout.tie(0)
+
 using namespace std;
+#define debug(x) cout << #x << ": " << x << endl;
 
 const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
@@ -27,22 +29,28 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<pair<int, int>> v;
-    for (int i = 0; i < n; i++)
+    int n, m;
+    cin >> n >> m;
+    ll a[6] = {0}, b[6] = {0};
+    for (int i = 1; i <= n; i++)
     {
-        int x, y;
-        cin >> x >> y;
-        v.push_back(make_pair(x, y));
+        a[i % 5]++;
     }
-    sort(v.begin(), v.end(), [&](pair<int, int> a, pair<int, int> b)
-         { return a.second < b.second; });
-    cout << "---" << endl;
-    for (auto ele : v)
+
+    for (int i = 1; i <= m; i++)
     {
-        cout << ele.first << " " << ele.second << endl;
+        b[i % 5]++;
     }
+    ll ans = 0;
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            if ((i + j) % 5 == 0)
+                ans += a[i] * b[j];
+        }
+    }
+    cout << ans << endl;
 }
 
 signed main()

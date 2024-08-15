@@ -18,40 +18,70 @@
     ios_base::sync_with_stdio(false); \
     cin.tie(0);                       \
     cout.tie(0)
+
 using namespace std;
+#define debug(x) cout << #x << ": " << x << endl;
 
 const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
+/*we have 3 hasmaps, by going through all points and for each one we :
+    1- increase the count of points on x,
+    2- increase the count of points on y,
+    3- increase the count of points on y=-x+b & y=x+b (knowing both x and y this should be ez)
+* after that we go through each of these maps and ans+= value*(value-1) only when value>1
+*/
 
 void solve()
 {
-    int n;
+    ll n;
     cin >> n;
-    vector<pair<int, int>> v;
-    for (int i = 0; i < n; i++)
+    map<ll, ll> hor, ver;
+    map<pair<ll, ll>, ll> diagonals;
+    for (ll i = 0; i < n; i++)
     {
-        int x, y;
+        ll x, y;
         cin >> x >> y;
-        v.push_back(make_pair(x, y));
+        pair<ll, ll> firstD = make_pair(1, y - x);
+        pair<ll, ll> secondD = make_pair(-1, y + x);
+        diagonals[firstD]++;
+        diagonals[secondD]++;
+        hor[y]++;
+        ver[x]++;
     }
-    sort(v.begin(), v.end(), [&](pair<int, int> a, pair<int, int> b)
-         { return a.second < b.second; });
-    cout << "---" << endl;
-    for (auto ele : v)
+    ll ans = 0;
+    for (auto d : diagonals)
     {
-        cout << ele.first << " " << ele.second << endl;
+        if (d.second > 1)
+        {
+            ans += d.second * (d.second - 1);
+        }
     }
+    for (auto h : hor)
+    {
+        if (h.second > 1)
+        {
+            ans += h.second * (h.second - 1);
+        }
+    }
+    for (auto v : ver)
+    {
+        if (v.second > 1)
+        {
+            ans += v.second * (v.second - 1);
+        }
+    }
+    cout << ans << endl;
 }
 
 signed main()
 {
     FAST;
-    ll tt = 1;
+    int tt = 1;
     // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
-    solve();
+    cin >> tt;
+    while (tt--)
+        solve();
     return 0;
 }

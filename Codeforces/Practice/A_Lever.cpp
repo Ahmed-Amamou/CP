@@ -18,7 +18,9 @@
     ios_base::sync_with_stdio(false); \
     cin.tie(0);                       \
     cout.tie(0)
+
 using namespace std;
+#define debug(x) cout << #x << ": " << x << endl;
 
 const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
@@ -27,21 +29,38 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<pair<int, int>> v;
-    for (int i = 0; i < n; i++)
+    string s;
+    cin >> s;
+    ll pivot;
+    for (int i = 0; i < s.size(); i++)
     {
-        int x, y;
-        cin >> x >> y;
-        v.push_back(make_pair(x, y));
+        if (s[i] == '^')
+        {
+            pivot = i;
+            break;
+        }
     }
-    sort(v.begin(), v.end(), [&](pair<int, int> a, pair<int, int> b)
-         { return a.second < b.second; });
-    cout << "---" << endl;
-    for (auto ele : v)
+    ll left = 0, right = 0;
+    for (int i = 0; i < pivot; i++)
     {
-        cout << ele.first << " " << ele.second << endl;
+        left += (isdigit(s[i]) ? (s[i] - '0') : 0) * (pivot - i);
+    }
+
+    for (int i = pivot + 1; i < s.size(); i++)
+    {
+        right += (isdigit(s[i]) ? (s[i] - '0') : 0) * (i - pivot);
+    }
+    if (right == left)
+    {
+        cout << "balance" << endl;
+    }
+    else if (right > left)
+    {
+        cout << "right" << endl;
+    }
+    else
+    {
+        cout << "left";
     }
 }
 

@@ -18,7 +18,9 @@
     ios_base::sync_with_stdio(false); \
     cin.tie(0);                       \
     cout.tie(0)
+
 using namespace std;
+#define debug(x) cout << #x << ": " << x << endl;
 
 const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
@@ -29,19 +31,33 @@ void solve()
 {
     int n;
     cin >> n;
-    vector<pair<int, int>> v;
+    int a[n];
+    ll all = 0;
     for (int i = 0; i < n; i++)
     {
-        int x, y;
-        cin >> x >> y;
-        v.push_back(make_pair(x, y));
+        cin >> a[i];
+        all += a[i];
     }
-    sort(v.begin(), v.end(), [&](pair<int, int> a, pair<int, int> b)
-         { return a.second < b.second; });
-    cout << "---" << endl;
-    for (auto ele : v)
+    int q;
+    cin >> q;
+    ll pref[n + 1] = {0};
+    for (int i = 1; i < n + 1; i++)
     {
-        cout << ele.first << " " << ele.second << endl;
+        pref[i] = pref[i - 1] + a[i - 1];
+    }
+
+    while (q--)
+    {
+        ll x, y, m;
+        cin >> x >> y >> m;
+        ll go, del = y;
+        go = max(all, x);
+        // for (int i = 0; i < m; i++)
+        // {
+        //     del += a[i];
+        // }
+        del += pref[m];
+        cout << min(go, del) << endl;
     }
 }
 

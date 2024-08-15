@@ -18,7 +18,9 @@
     ios_base::sync_with_stdio(false); \
     cin.tie(0);                       \
     cout.tie(0)
+
 using namespace std;
+#define debug(x) cout << #x << ": " << x << endl;
 
 const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
@@ -27,22 +29,48 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    int n;
+    ll n;
     cin >> n;
-    vector<pair<int, int>> v;
+    map<ll, double> mp;
+    for (ll i = 1; i <= n; i++)
+    {
+        mp[i] = 0.0;
+    }
     for (int i = 0; i < n; i++)
     {
-        int x, y;
-        cin >> x >> y;
-        v.push_back(make_pair(x, y));
+        ll q;
+        cin >> q;
+        for (int i = 0; i < q; i++)
+        {
+            ll x;
+            cin >> x;
+            mp[x]++;
+        }
     }
-    sort(v.begin(), v.end(), [&](pair<int, int> a, pair<int, int> b)
-         { return a.second < b.second; });
-    cout << "---" << endl;
-    for (auto ele : v)
+    vector<pair<ll, double>> ans;
+    for (auto it : mp)
     {
-        cout << ele.first << " " << ele.second << endl;
+        // cout << ((n * 1.0) / 2) << endl;
+        // cout << "---" << endl;
+        // cout << it.first << " " << it.second << endl;
+        if (it.second > ((n * 1.0) / 2))
+        {
+            ans.push_back(make_pair(it.first, (it.second * 1.0) / n));
+        }
     }
+
+    // cout << "answerarray " << endl;
+    // for (auto it : ans)
+    // {
+    //     cout << it.first << " " << it.second << endl;
+    // }
+    sort(ans.begin(), ans.end());
+    cout << ans.size() << endl;
+    for (auto it : ans)
+    {
+        cout << it.first << " ";
+    }
+    cout << endl;
 }
 
 signed main()
@@ -50,8 +78,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
-    solve();
+    cin >> tt;
+    while (tt--)
+        solve();
     return 0;
 }
