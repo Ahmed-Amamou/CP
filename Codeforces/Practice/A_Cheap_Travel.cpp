@@ -34,6 +34,7 @@ void solve()
     else
         sum += rest * a;
     cout << sum << endl;
+    
 }
 
 signed main()
