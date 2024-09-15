@@ -48,55 +48,58 @@ void solve()
             highway.push_back(make_pair(s, make_pair(l, r)));
         }
     }
-
-    int l_diff = 0, r_diff = 0;
-    for (auto e : highway)
+    int mn = 0, mx = 100000000;
+    for (int i = highway.size() - 1; i >= 0; i--)
     {
-        if (e.first == "none")
+        string type = highway[i].first;
+        pair<int, int> range = highway[i].second;
+        if (type == "none")
         {
-            cout << e.second.first - r_diff << " " << e.second.second - l_diff << endl;
-            break;
+            mn = max(mn, range.first);
+            mx = min(mx, range.second);
         }
-        else if (e.first == "on")
+        else if (type == "on")
         {
-            l_diff += e.second.first;
-            r_diff += e.second.second;
+            mn = max(0, mn - range.second);
+            mx = mx - range.first;
         }
         else
         {
-            l_diff -= e.second.first;
-            r_diff -= e.second.second;
-            r_diff = max(r_diff, 0);
+            mn = mn + range.first;
+            mx = mx + range.second;
         }
     }
-    l_diff = 0, r_diff = 0;
-    for (auto it = highway.rbegin(); it != highway.rend(); it++)
+    cout << mn << " " << mx << endl;
+    mn = 0, mx = 100000000;
+    for (int i = 0; i < highway.size(); i++)
     {
-        if (it->first == "none")
+        string type = highway[i].first;
+        pair<int, int> range = highway[i].second;
+        if (type == "none")
         {
-            cout << it->second.first - r_diff << " " << it->second.second - l_diff << endl;
-            break;
+            mn = max(mn, range.first);
+            mx = min(mx, range.second);
         }
-        else if (it->first == "off")
+        else if (type == "on")
         {
-            l_diff += it->second.first;
-            r_diff += it->second.second;
+            mn = mn + range.first;
+            mx = mx + range.second;
         }
         else
         {
-            l_diff -= it->second.first;
-            r_diff -= it->second.second;
-            
+            mn = max(0, mn - range.second);
+            mx = mx - range.first;
         }
     }
+    cout << mn << " " << mx << endl;
 }
 
 signed main()
 {
     FAST;
     ll tt = 1;
-    // freopen("traffic.in", "r", stdin);
-    // freopen("traffic.out", "w", stdout);
+    freopen("traffic.in", "r", stdin);
+    freopen("traffic.out", "w", stdout);
     // cin >> tt;
     // while (tt--)
     solve();
