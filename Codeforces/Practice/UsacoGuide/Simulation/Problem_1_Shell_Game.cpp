@@ -20,7 +20,7 @@
     cout.tie(0)
 
 using namespace std;
-#define debug(x) cout << #x << ": " << x << endl;
+// #define debug(x) cout << #x << ": " << x << endl;
 
 const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
@@ -31,32 +31,43 @@ void solve()
 {
     int n;
     cin >> n;
-    ll cnt = 0;
-    for (int i = 4; i < n + 1; i++)
+    int swaps[n][3];
+    for (int i = 0; i < n; i++)
     {
-        ll loop_count = 0;
-        ll x = i;
-        for (int j = 2; j <= (i + 1) / 2; j++)
-        {
-            if ((x % j) == 0)
-            {
-                loop_count++;
-            }
-            while ((x % j) == 0)
-            {
-                x /= j;
-            }
-        }
-        cnt += (loop_count == 2);
+        cin >> swaps[i][0] >> swaps[i][1] >> swaps[i][2];
     }
-    cout << cnt << endl;
+    // pebble is in first
+    int k[3] = {1, 0, 0};
+    ll cnt1 = 0;
+    for (int i = 0; i < n; i++)
+    {
+        swap(k[swaps[i][0] - 1], k[swaps[i][1] - 1]);
+        cnt1 += (k[swaps[i][2] - 1]) == 1 ? 1 : 0;
+    }
+    int l[3] = {0, 1, 0};
+    ll cnt2 = 0;
+    for (int i = 0; i < n; i++)
+    {
+        swap(l[swaps[i][0] - 1], l[swaps[i][1] - 1]);
+        cnt2 += (l[swaps[i][2] - 1]) == 1 ? 1 : 0;
+    }
+
+    int m[3] = {0, 0, 1};
+    ll cnt3 = 0;
+    for (int i = 0; i < n; i++)
+    {
+        swap(m[swaps[i][0] - 1], m[swaps[i][1] - 1]);
+        cnt3 += (m[swaps[i][2] - 1]) == 1 ? 1 : 0;
+    }
+    cout << max({cnt1, cnt2, cnt3}) << endl;
 }
 
 signed main()
 {
     FAST;
     ll tt = 1;
-    // freopen("input.in", "r", stdin);
+    freopen("shell.in", "r", stdin);
+    freopen("shell.out", "w", stdout);
     // cin >> tt;
     // while (tt--)
     solve();

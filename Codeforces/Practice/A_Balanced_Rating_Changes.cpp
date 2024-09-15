@@ -31,25 +31,29 @@ void solve()
 {
     int n;
     cin >> n;
-    ll cnt = 0;
-    for (int i = 4; i < n + 1; i++)
+    int odd = 0;
+    int a[n];
+    for (int i = 0; i < n; i++)
     {
-        ll loop_count = 0;
-        ll x = i;
-        for (int j = 2; j <= (i + 1) / 2; j++)
+        cin >> a[i];
+        if (abs(a[i] % 2))
         {
-            if ((x % j) == 0)
+            if (odd)
             {
-                loop_count++;
+                cout << (a[i] + 1) / 2 << endl;
+                odd--;
             }
-            while ((x % j) == 0)
+            else
             {
-                x /= j;
+                cout << ((a[i] - 1) / 2) << endl;
+                odd++;
             }
         }
-        cnt += (loop_count == 2);
+        else
+        {
+            cout << a[i] / 2 << endl;
+        }
     }
-    cout << cnt << endl;
 }
 
 signed main()

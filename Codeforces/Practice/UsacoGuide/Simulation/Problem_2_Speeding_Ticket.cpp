@@ -29,34 +29,39 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    int n;
-    cin >> n;
-    ll cnt = 0;
-    for (int i = 4; i < n + 1; i++)
+    int n, m;
+    cin >> n >> m;
+    vector<int> speedlimit;
+    for (int i = 0; i < n; i++)
     {
-        ll loop_count = 0;
-        ll x = i;
-        for (int j = 2; j <= (i + 1) / 2; j++)
-        {
-            if ((x % j) == 0)
-            {
-                loop_count++;
-            }
-            while ((x % j) == 0)
-            {
-                x /= j;
-            }
-        }
-        cnt += (loop_count == 2);
+        int miles, sl;
+        cin >> miles >> sl;
+        for (int j = 0; j < miles; j++)
+            speedlimit.push_back(sl);
     }
-    cout << cnt << endl;
+    vector<int> cowspeed;
+    for (int i = 0; i < m; i++)
+    {
+        int miles, sl;
+        cin >> miles >> sl;
+
+        for (int j = 0; j < miles; j++)
+            cowspeed.push_back(sl);
+    }
+    int mx = 0;
+    for (int i = 0; i < 100; i++)
+    {
+        mx = max(cowspeed[i] - speedlimit[i], mx);
+    }
+    cout << mx << endl;
 }
 
 signed main()
 {
     FAST;
     ll tt = 1;
-    // freopen("input.in", "r", stdin);
+    freopen("speeding.in", "r", stdin);
+    freopen("speeding.out", "w", stdout);
     // cin >> tt;
     // while (tt--)
     solve();

@@ -26,30 +26,38 @@ const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
+map<int, int> count_points_before_x(const set<pair<int, int>> &points)
+{
+    map<int, int> result; // Map to store the number of points before each x
+    int count = 0;        // Prefix sum to count points
+
+    for (const auto &point : points)
+    {
+        int x = point.first; // Get the x-coordinate of the current point
+
+        // If this is the first time we encounter this x value, store the count
+        if (result.find(x) == result.end())
+        {
+            result[x] = count;
+        }
+
+        count++; // Increment the count for the next point
+    }
+
+    return result;
+}
 
 void solve()
 {
-    int n;
-    cin >> n;
-    ll cnt = 0;
-    for (int i = 4; i < n + 1; i++)
+    set<pair<int, int>> points = {{1, 2}, {3, 4}, {3, 5}, {5, 6}, {7, 8}};
+
+    map<int, int> result = count_points_before_x(points);
+
+    // Output the result
+    for (const auto &[x, count] : result)
     {
-        ll loop_count = 0;
-        ll x = i;
-        for (int j = 2; j <= (i + 1) / 2; j++)
-        {
-            if ((x % j) == 0)
-            {
-                loop_count++;
-            }
-            while ((x % j) == 0)
-            {
-                x /= j;
-            }
-        }
-        cnt += (loop_count == 2);
+        cout << "Number of points with x < " << x << ": " << count << endl;
     }
-    cout << cnt << endl;
 }
 
 signed main()
@@ -57,8 +65,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
-    solve();
+    cin >> tt;
+    while (tt--)
+        solve();
     return 0;
 }

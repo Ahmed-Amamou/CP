@@ -31,25 +31,18 @@ void solve()
 {
     int n;
     cin >> n;
-    ll cnt = 0;
-    for (int i = 4; i < n + 1; i++)
+    int a[n];
+    int freq[10001] = {0};
+    for (int i = 0; i < n; i++)
     {
-        ll loop_count = 0;
-        ll x = i;
-        for (int j = 2; j <= (i + 1) / 2; j++)
-        {
-            if ((x % j) == 0)
-            {
-                loop_count++;
-            }
-            while ((x % j) == 0)
-            {
-                x /= j;
-            }
+        cin >> a[i];
+        freq[a[i]]++;
+        if (freq[a[i]] > ((n + 1) / 2)){
+            cout << "NO"<<endl;
+            return;
         }
-        cnt += (loop_count == 2);
     }
-    cout << cnt << endl;
+    cout << "YES"<<endl;
 }
 
 signed main()
@@ -59,6 +52,6 @@ signed main()
     // freopen("input.in", "r", stdin);
     // cin >> tt;
     // while (tt--)
-    solve();
+        solve();
     return 0;
 }

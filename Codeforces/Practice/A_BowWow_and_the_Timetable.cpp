@@ -18,7 +18,6 @@
     ios_base::sync_with_stdio(false); \
     cin.tie(0);                       \
     cout.tie(0)
-
 using namespace std;
 #define debug(x) cout << #x << ": " << x << endl;
 
@@ -29,27 +28,33 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    int n;
-    cin >> n;
-    ll cnt = 0;
-    for (int i = 4; i < n + 1; i++)
+    string s;
+    cin >> s;
+
+    if (s == "0")
     {
-        ll loop_count = 0;
-        ll x = i;
-        for (int j = 2; j <= (i + 1) / 2; j++)
-        {
-            if ((x % j) == 0)
-            {
-                loop_count++;
-            }
-            while ((x % j) == 0)
-            {
-                x /= j;
-            }
-        }
-        cnt += (loop_count == 2);
+        cout << 0 << endl;
+        return;
     }
-    cout << cnt << endl;
+    ll c = 0;
+    ll cnt_ones = 0;
+    ll actual_cnt = 0;
+    while (c < s.size() - 1)
+    {
+        //     debug(c);
+        //     debug(cnt_ones);
+        //     debug(actual_cnt);
+        if (c % 2 == 0)
+            actual_cnt++;
+        if (s[s.size() - 1 - c] == '1')
+        {
+            cnt_ones++;
+        }
+        c++;
+    }
+
+    actual_cnt += (cnt_ones > 0 && (c % 2 == 0) ? 1 : 0);
+    cout << actual_cnt << endl;
 }
 
 signed main()

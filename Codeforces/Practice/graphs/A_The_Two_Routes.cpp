@@ -26,30 +26,70 @@ const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
+int bfs(vector<int> graph[], int n, int start)
+{
+    vector<int> dist(n, INT_MAX);
+    queue<int> q;
+    q.push(start);
+    dist[0] = 0;
+
+    while (!q.empty())
+    {
+        int v = q.front();
+        q.pop();
+        for (auto u : graph[v])
+        {
+            if (dist[v] + 1 < dist[u])
+            {
+                dist[u] = dist[v] + 1;
+                q.push(u);
+            }
+        }
+    }
+    return dist[n - 1];
+}
 
 void solve()
 {
-    int n;
-    cin >> n;
-    ll cnt = 0;
-    for (int i = 4; i < n + 1; i++)
+    int n, m;
+    cin >> n >> m;
+    vector<int> railways[n];
+    vector<int> roads[n];
+    set<pair<int, int>> seen;
+    for (int i = 0; i < m; i++)
     {
-        ll loop_count = 0;
-        ll x = i;
-        for (int j = 2; j <= (i + 1) / 2; j++)
+        int u, v;
+        cin >> u >> v;
+        u--;
+        v--;
+        railways[u].push_back(v);
+        railways[v].push_back(u);
+        seen.insert(make_pair(u, v));
+        seen.insert(make_pair(v, u));
+    }
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = i; j < n; j++)
         {
-            if ((x % j) == 0)
+            pair<int, int> pp1 = make_pair(i, j);
+            pair<int, int> pp2 = make_pair(j, i);
+            if (j != i && seen.find(pp1) == seen.end() && seen.find(pp2) == seen.end())
             {
-                loop_count++;
-            }
-            while ((x % j) == 0)
-            {
-                x /= j;
+                roads[i].push_back(j);
+                roads[j].push_back(i);
             }
         }
-        cnt += (loop_count == 2);
     }
-    cout << cnt << endl;
+    int rails_path = bfs(railways, n, 0);
+    int road_path = bfs(roads, n, 0);
+    if (road_path == INT_MAX || rails_path == INT_MAX)
+    {
+        cout << -1 << endl;
+    }
+    else
+    {
+        cout << max(road_path, rails_path) << endl;
+    }
 }
 
 signed main()

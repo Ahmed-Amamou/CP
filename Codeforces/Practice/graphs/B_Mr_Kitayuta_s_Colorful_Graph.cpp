@@ -27,29 +27,63 @@ const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
+void dfs(vector<vector<vector<int>>> &graph, vector<bool> &visited, int c, int u)
+{
+    visited[u] = true;
+    for (auto x : graph[c][u])
+    {
+        if (!visited[x])
+            dfs(graph, visited, c, x);
+    }
+}
+
 void solve()
 {
-    int n;
-    cin >> n;
-    ll cnt = 0;
-    for (int i = 4; i < n + 1; i++)
+    int n, m;
+    cin >> n >> m;
+    vector<vector<vector<int>>> graph(m, vector<vector<int>>(n));
+    for (int i = 0; i < m; i++)
     {
-        ll loop_count = 0;
-        ll x = i;
-        for (int j = 2; j <= (i + 1) / 2; j++)
-        {
-            if ((x % j) == 0)
-            {
-                loop_count++;
-            }
-            while ((x % j) == 0)
-            {
-                x /= j;
-            }
-        }
-        cnt += (loop_count == 2);
+        int u, v, c;
+        cin >> u >> v >> c;
+        u--;
+        v--;
+        c--;
+        graph[c][u].push_back(v);
+        graph[c][v].push_back(u);
     }
-    cout << cnt << endl;
+    // for (int c = 0; c < m; c++)
+    // {
+    //     cout << "Graph for c = " << c << ":" << endl;
+    //     for (int u = 0; u < n; u++)
+    //     {
+    //         cout << "Node " << u << ": ";
+    //         for (int v : graph[c][u])
+    //         {
+    //             cout << v << " ";
+    //         }
+    //         cout << endl;
+    //     }
+    //     cout << endl;
+    // }
+    int q;
+    cin >> q;
+    while (q--)
+    {
+        int u, v;
+        cin >> u >> v;
+        u--;
+        v--;
+        int cnt = 0;
+        for (int c = 0; c < m; c++)
+        {
+            vector<bool> visited(n, false);
+            dfs(graph, visited, c, u);
+            if (visited[v])
+                cnt++;
+        }
+        cout << cnt << endl;
+    }
 }
 
 signed main()

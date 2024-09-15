@@ -31,25 +31,16 @@ void solve()
 {
     int n;
     cin >> n;
-    ll cnt = 0;
-    for (int i = 4; i < n + 1; i++)
+    string s[n];
+    for (int i = 0; i < n; i++)
     {
-        ll loop_count = 0;
-        ll x = i;
-        for (int j = 2; j <= (i + 1) / 2; j++)
-        {
-            if ((x % j) == 0)
-            {
-                loop_count++;
-            }
-            while ((x % j) == 0)
-            {
-                x /= j;
-            }
-        }
-        cnt += (loop_count == 2);
+        cin >> s[i];
     }
-    cout << cnt << endl;
+    for (int i = n - 1; i >= 0; i--)
+    {
+        cout << s[i].find('#') + 1 << " ";
+    }
+    cout << endl;
 }
 
 signed main()
@@ -57,8 +48,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
-    solve();
+    cin >> tt;
+    while (tt--)
+        solve();
     return 0;
 }

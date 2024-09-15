@@ -31,25 +31,38 @@ void solve()
 {
     int n;
     cin >> n;
-    ll cnt = 0;
-    for (int i = 4; i < n + 1; i++)
+    set<pair<int, int>> poinet;
+    for (int i = 0; i < n; i++)
     {
-        ll loop_count = 0;
-        ll x = i;
-        for (int j = 2; j <= (i + 1) / 2; j++)
-        {
-            if ((x % j) == 0)
-            {
-                loop_count++;
-            }
-            while ((x % j) == 0)
-            {
-                x /= j;
-            }
-        }
-        cnt += (loop_count == 2);
+        pair<int, int> point;
+        cin >> point.first >> point.second;
+        poinet.insert(point);
     }
-    cout << cnt << endl;
+
+    set<int> horizontals; // defined by their x
+    for (auto it : poinet)
+    {
+        pair<int, int> test1 = make_pair(it.first, 0);
+        pair<int, int> test2 = make_pair(it.first, 1);
+
+        if ((it.second == 1 && poinet.find(test1) != poinet.end()) || (it.second == 0 && poinet.find(test2) != poinet.end()))
+        {
+            horizontals.insert(it.first);
+        }
+    }
+
+    ll count = 0;
+    count += horizontals.size() * (poinet.size() - 2);
+
+    for (auto it : poinet)
+    {
+        if (it.second == 0 && poinet.find({it.first - 1, 1}) != poinet.end() && poinet.find({it.first + 1, 1}) != poinet.end())
+            count++;
+
+        if (it.second == 1 && poinet.find({it.first - 1, 0}) != poinet.end() && poinet.find({it.first + 1, 0}) != poinet.end())
+            count++;
+    }
+    cout << count << endl;
 }
 
 signed main()
@@ -57,8 +70,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
-    solve();
+    cin >> tt;
+    while (tt--)
+        solve();
     return 0;
 }

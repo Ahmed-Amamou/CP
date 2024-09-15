@@ -20,7 +20,6 @@
     cout.tie(0)
 
 using namespace std;
-#define debug(x) cout << #x << ": " << x << endl;
 
 const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
@@ -29,34 +28,37 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    int n;
-    cin >> n;
-    ll cnt = 0;
-    for (int i = 4; i < n + 1; i++)
+    int x, y;
+    cin >> x >> y;
+    ll step = 1;
+    ll counter = 0;
+    ll sign = 1;
+    ll position = x;
+    while (true)
     {
-        ll loop_count = 0;
-        ll x = i;
-        for (int j = 2; j <= (i + 1) / 2; j++)
+        for (position; position != x + sign * step; position += sign)
         {
-            if ((x % j) == 0)
+            // debug(counter, position);
+            if (position == y)
             {
-                loop_count++;
+                break;
             }
-            while ((x % j) == 0)
-            {
-                x /= j;
-            }
+            counter++;
         }
-        cnt += (loop_count == 2);
+        if (position == y)
+            break;
+        sign *= -1;
+        step *= 2;
     }
-    cout << cnt << endl;
+    cout << counter << endl;
 }
 
 signed main()
 {
     FAST;
     ll tt = 1;
-    // freopen("input.in", "r", stdin);
+    freopen("lostcow.in", "r", stdin);
+    freopen("lostcow.out", "w", stdout);
     // cin >> tt;
     // while (tt--)
     solve();

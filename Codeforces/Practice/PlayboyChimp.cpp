@@ -31,25 +31,19 @@ void solve()
 {
     int n;
     cin >> n;
-    ll cnt = 0;
-    for (int i = 4; i < n + 1; i++)
+    vector<int> a(n);
+    for (int i = 0; i < n; i++)
     {
-        ll loop_count = 0;
-        ll x = i;
-        for (int j = 2; j <= (i + 1) / 2; j++)
-        {
-            if ((x % j) == 0)
-            {
-                loop_count++;
-            }
-            while ((x % j) == 0)
-            {
-                x /= j;
-            }
-        }
-        cnt += (loop_count == 2);
+        cin >> a[i];
     }
-    cout << cnt << endl;
+    int q;
+    cin >> q;
+    while (q--)
+    {
+        int x;
+        cin >> x;
+        // we looking for the smallest elemnt bigger than x and the biggest element smaller than x,
+    }
 }
 
 signed main()
@@ -58,7 +52,6 @@ signed main()
     ll tt = 1;
     // freopen("input.in", "r", stdin);
     // cin >> tt;
-    // while (tt--)
     solve();
     return 0;
 }
