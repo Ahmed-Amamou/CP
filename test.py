@@ -31,3 +31,5 @@ def perform_queries_2(s, queries):
 
     return ''.join(result)
 print(perform_queries_2("atcoder",[['r','a'],['t', 'e'],['d', 'v'],['a', 'r']]))
+
+
