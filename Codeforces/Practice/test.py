@@ -23,3 +23,6 @@ if solution_found:
     print(best_start1, best_start2)
 else:
     print(-1)
+# Read space-separated integers into a list
+# numbers = list(map(int, input().split()))
+# print(numbers)
