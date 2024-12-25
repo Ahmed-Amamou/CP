@@ -1,0 +1,5 @@
+Binary Search problem to solve:
+https://codeforces.com/contest/251/problem/A
+https://codeforces.com/contest/670/problem/D2
+https://codeforces.com/contest/1730/problem/B
+https://codeforces.com/contest/1707/problem/A
