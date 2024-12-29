@@ -1,0 +1,74 @@
+/*
+ ▄▀▀▄ ▄▄   ▄▀▀█▄   ▄▀▀▄ ▄▀▄  ▄▀▀▀▀▄   ▄▀▀▀▀▄   ▄▀▀█▄▄
+█  █   ▄▀ ▐ ▄▀ ▀▄ █  █ ▀  █ █      █ █      █ █ ▄▀   █
+▐  █▄▄▄█    █▄▄▄█ ▐  █    █ █      █ █      █ ▐ █    █
+   █   █   ▄▀   █   █    █  ▀▄    ▄▀ ▀▄    ▄▀   █    █
+  ▄▀  ▄▀  █   ▄▀  ▄▀   ▄▀     ▀▀▀▀     ▀▀▀▀    ▄▀▄▄▄▄▀
+ █   █    ▐   ▐   █    █                      █     ▐
+ ▐   ▐            ▐    ▐                      ▐
+*/
+
+#include <bits/stdc++.h>
+#define ll long long
+#define endl "\n"
+#define F first
+#define double long double
+#define S second
+#define FAST                          \
+    ios_base::sync_with_stdio(false); \
+    cin.tie(0);                       \
+    cout.tie(0)
+
+using namespace std;
+#define debug(x) cout << #x << ": " << x << endl;
+
+const double EPS = 0.00000001;
+const ll MOD = 1e9 + 7;
+int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
+int lcm(int a, int b) { return a * (b / gcd(a, b)); }
+
+signed main()
+{
+    FAST;
+    ll tt = 1;
+    freopen("walk_the_line_input.txt", "r", stdin);
+    freopen("A_Output.txt", "w", stdout);
+    cin >>
+        tt;
+    for (int j = 0; j < tt; j++)
+    {
+
+        ll n, k;
+        cin >> n >> k;
+
+        vector<ll> a(n);
+        for (int i = 0; i < n; i++)
+        {
+            cin >> a[i];
+        }
+        string ans;
+        sort(a.begin(), a.end());
+        if (n == 1)
+        {
+            if (k >= a[0])
+                ans = "YES";
+            else
+                ans = "NO";
+        }
+        else
+        {
+            if (k >= a[0] * 2 * (n - 1) - a[0])
+            {
+                ans = "YES";
+            }
+            else
+            {
+                ans = "NO";
+            }
+        }
+
+        cout
+            << "Case #" << j + 1 << ": " << ans << endl;
+    }
+    return 0;
+}

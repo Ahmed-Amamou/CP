@@ -1,0 +1,57 @@
+/*
+ ▄▀▀▄ ▄▄   ▄▀▀█▄   ▄▀▀▄ ▄▀▄  ▄▀▀▀▀▄   ▄▀▀▀▀▄   ▄▀▀█▄▄
+█  █   ▄▀ ▐ ▄▀ ▀▄ █  █ ▀  █ █      █ █      █ █ ▄▀   █
+▐  █▄▄▄█    █▄▄▄█ ▐  █    █ █      █ █      █ ▐ █    █
+   █   █   ▄▀   █   █    █  ▀▄    ▄▀ ▀▄    ▄▀   █    █
+  ▄▀  ▄▀  █   ▄▀  ▄▀   ▄▀     ▀▀▀▀     ▀▀▀▀    ▄▀▄▄▄▄▀
+ █   █    ▐   ▐   █    █                      █     ▐
+ ▐   ▐            ▐    ▐                      ▐
+*/
+
+#include <bits/stdc++.h>
+#define ll long long
+#define endl "\n"
+#define F first
+#define double long double
+#define S second
+#define FAST                          \
+    ios_base::sync_with_stdio(false); \
+    cin.tie(0);                       \
+    cout.tie(0)
+
+using namespace std;
+#define debug(x) cout << #x << ": " << x << endl;
+
+const double EPS = 0.00000001;
+const ll MOD = 1e9 + 7;
+int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
+int lcm(int a, int b) { return a * (b / gcd(a, b)); }
+
+void solve()
+{
+    int grid[5][5];
+    pair<int, int> pos;
+    for (int i = 0; i < 5; i++)
+    {
+
+        for (int j = 0; j < 5; j++)
+        {
+            cin >> grid[i][j];
+            if (grid[i][j] == 1)
+                pos = make_pair(i, j);
+        }
+    }
+    cout << abs(2 - pos.first) + abs(2 - pos.second) << endl;
+}
+
+signed main()
+{
+    FAST;
+    ll tt = 1;
+    // freopen("input.in", "r", stdin);
+    //   cin >> tt;
+    //   while (tt--)
+    solve();
+    return 0;
+}
+

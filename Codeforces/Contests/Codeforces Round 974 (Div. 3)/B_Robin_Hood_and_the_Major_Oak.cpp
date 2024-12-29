@@ -1,0 +1,82 @@
+/*
+ ▄▀▀▄ ▄▄   ▄▀▀█▄   ▄▀▀▄ ▄▀▄  ▄▀▀▀▀▄   ▄▀▀▀▀▄   ▄▀▀█▄▄
+█  █   ▄▀ ▐ ▄▀ ▀▄ █  █ ▀  █ █      █ █      █ █ ▄▀   █
+▐  █▄▄▄█    █▄▄▄█ ▐  █    █ █      █ █      █ ▐ █    █
+   █   █   ▄▀   █   █    █  ▀▄    ▄▀ ▀▄    ▄▀   █    █
+  ▄▀  ▄▀  █   ▄▀  ▄▀   ▄▀     ▀▀▀▀     ▀▀▀▀    ▄▀▄▄▄▄▀
+ █   █    ▐   ▐   █    █                      █     ▐
+ ▐   ▐            ▐    ▐                      ▐
+*/
+
+#include <bits/stdc++.h>
+#define ll long long
+#define endl "\n"
+#define F first
+#define double long double
+#define S second
+#define FAST                          \
+    ios_base::sync_with_stdio(false); \
+    cin.tie(0);                       \
+    cout.tie(0)
+
+using namespace std;
+#define debug(x) cout << #x << ": " << x << endl;
+
+const double EPS = 0.00000001;
+const ll MOD = 1e9 + 7;
+int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
+int lcm(int a, int b) { return a * (b / gcd(a, b)); }
+
+void solve()
+{
+    int n, k;
+    cin >> n >> k;
+    if (n == 1)
+    {
+        cout << "NO" << endl;
+        return;
+    }
+    if (n == 2)
+    {
+        if (k == 1)
+            cout << "YES" << endl;
+        else
+        {
+            cout << "NO" << endl;
+        }
+        return;
+    }
+    if ((n % 2) != 0)
+    {
+        if (((k % 4) == 3 || (k % 4) == 0))
+        {
+            cout << "YES" << endl;
+        }
+        else
+        {
+            cout << "NO" << endl;
+        }
+    }
+    else
+    {
+        if (k != 2 && ((k % 4) == 1 || (k % 4) == 0))
+        {
+            cout << "YES" << endl;
+        }
+        else
+        {
+            cout << "NO" << endl;
+        }
+    }
+}
+
+signed main()
+{
+    FAST;
+    ll tt = 1;
+    // freopen("input.in", "r", stdin);
+    cin >> tt;
+    while (tt--)
+        solve();
+    return 0;
+}

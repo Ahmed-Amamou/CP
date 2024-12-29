@@ -1,0 +1,8 @@
+void main(){
+	int x = 1;
+
+	x+=1;
+	printf("this is x: %d",x);
+return;
+}
+
