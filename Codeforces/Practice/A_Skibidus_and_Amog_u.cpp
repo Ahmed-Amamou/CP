@@ -21,34 +21,14 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    ll k, n;
-    cin >> k >> n;
-    ll a[n];
-    for (ll i = 0; i < n; i++)
+    string s;
+    cin >> s;
+    int n = s.size();
+    for (int i = 0; i < n - 2; i++)
     {
-
-        cin >> a[i];
+        cout << s[i];
     }
-    ll l = 0;
-    ll r = LONG_LONG_MAX - 6 - 9;
-    auto ok = [&](ll councils)
-    {
-        ll sum = 0;
-        for (ll i = 0; i < n; i++)
-        {
-            sum += min(a[i], councils);
-        }
-        return sum / councils >= k;
-    };
-    while (r - l > 1)
-    {
-        ll mid = (l + (r - l) / 2);
-        if (ok(mid))
-            l = mid;
-        else
-            r = mid;
-    }
-    cout << l << endl;
+    cout << "i" << endl;
 }
 
 signed main()
@@ -56,8 +36,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
-    solve();
+    cin >> tt;
+    while (tt--)
+        solve();
     return 0;
 }

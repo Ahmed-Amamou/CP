@@ -21,34 +21,37 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    ll k, n;
-    cin >> k >> n;
-    ll a[n];
-    for (ll i = 0; i < n; i++)
+    int n, l, r;
+    cin >> n >> l >> r;
+    vector<int> a(n);
+    for (int i = 0; i < n; i++)
     {
-
         cin >> a[i];
     }
-    ll l = 0;
-    ll r = LONG_LONG_MAX - 6 - 9;
-    auto ok = [&](ll councils)
+
+    vector<ll> left, right;
+    for (int i = 0; i < r; i++)
     {
-        ll sum = 0;
-        for (ll i = 0; i < n; i++)
-        {
-            sum += min(a[i], councils);
-        }
-        return sum / councils >= k;
-    };
-    while (r - l > 1)
-    {
-        ll mid = (l + (r - l) / 2);
-        if (ok(mid))
-            l = mid;
-        else
-            r = mid;
+        left.push_back(a[i]);
     }
-    cout << l << endl;
+    for (int i = l - 1; i < n; i++)
+    {
+        right.push_back(a[i]);
+    }
+    sort(left.begin(), left.end());
+    sort(right.begin(), right.end());
+    ll sumL = 0, sumR = 0;
+    for (int i = 0; i < r - l + 1; i++)
+    {
+        if (i < left.size())
+            sumL += left[i];
+    }
+    for (int i = 0; i < r - l + 1; i++)
+    {
+        if (i < right.size())
+            sumR += right[i];
+    }
+    cout << min(sumL, sumR) << endl;
 }
 
 signed main()
@@ -56,8 +59,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
-    solve();
+    cin >> tt;
+    while (tt--)
+        solve();
     return 0;
 }

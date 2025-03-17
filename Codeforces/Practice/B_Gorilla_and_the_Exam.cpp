@@ -21,34 +21,39 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    ll k, n;
-    cin >> k >> n;
-    ll a[n];
-    for (ll i = 0; i < n; i++)
+    int n, k;
+    cin >> n >> k;
+    vector<int> a(n);
+    map<int, int> freq;
+    for (int i = 0; i < n; i++)
     {
-
         cin >> a[i];
-    }
-    ll l = 0;
-    ll r = LONG_LONG_MAX - 6 - 9;
-    auto ok = [&](ll councils)
+        freq[a[i]]++;
+    }   
+
+    vector<int> frequencies;
+    for (auto &p : freq)
     {
-        ll sum = 0;
-        for (ll i = 0; i < n; i++)
+        frequencies.push_back(p.second);
+    }
+    sort(frequencies.begin(), frequencies.end());
+
+    int unique = frequencies.size();
+
+    for (int f : frequencies)
+    {
+        if (k >= f)
         {
-            sum += min(a[i], councils);
+            k -= f;
+            unique--;
         }
-        return sum / councils >= k;
-    };
-    while (r - l > 1)
-    {
-        ll mid = (l + (r - l) / 2);
-        if (ok(mid))
-            l = mid;
         else
-            r = mid;
+        {
+            break;
+        }
     }
-    cout << l << endl;
+
+    cout << max(unique, 1) << endl;
 }
 
 signed main()
@@ -56,8 +61,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    // cin >> tt;
-    // while (tt--)
-    solve();
+    cin >> tt;
+    while (tt--)
+        solve();
     return 0;
 }
