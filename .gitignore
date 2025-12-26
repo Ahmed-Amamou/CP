@@ -2,4 +2,33 @@
 *.exe
 *.prob
 
+# Compiled Object files
+*.o
+*.obj
+*.out
 
+# Temporary and test files
+*.tmp
+*.temp
+a.out
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Competitive Programming Helper files
+.cph/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# CodeQL analysis files
+_codeql_detected_source_root
+
+# Input/output files (uncomment if needed)
+# input.txt
+# output.txt

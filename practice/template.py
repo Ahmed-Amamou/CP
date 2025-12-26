@@ -13,7 +13,7 @@ def insr():                              #For taking string inputs. Actually it 
     s = input()                          # which is easier to use in Python, because in Python, Strings are Immutable.
     return(list(s[:len(s) ]))
 def invr():
-    return(map(int,input().split())) #For taking space seperated integer variable inputs//
+    return(map(int,input().split())) # For taking space separated integer variable inputs
  
 def construct_graph(num_nodes, edges):
     graph = {node: [] for node in range(1, num_nodes + 1)}
@@ -26,10 +26,7 @@ def construct_graph(num_nodes, edges):
     return graph
 #############################################
 def gcd(a,b):
-    print(a,b)
     if(b==0):
         return a
     else:
         return gcd(b,a%b)
-    
-print(gcd(45,10))
