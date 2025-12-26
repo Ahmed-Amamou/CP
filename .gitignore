@@ -26,6 +26,9 @@ a.out
 .DS_Store
 Thumbs.db
 
+# CodeQL analysis files
+_codeql_detected_source_root
+
 # Input/output files (uncomment if needed)
 # input.txt
 # output.txt
