@@ -8,29 +8,7 @@
  ▐   ▐            ▐    ▐                      ▐
 */
 
-
-
-
-
-
 #include <bits/stdc++.h>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #define ll long long
 #define endl "\n"
@@ -48,7 +26,6 @@ const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
-
 
 int main()
 {

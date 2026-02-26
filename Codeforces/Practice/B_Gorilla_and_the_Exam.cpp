@@ -1,3 +1,5 @@
+// Author: Ahmed Amamou
+
 #include <bits/stdc++.h>
 #define ll long long
 #define endl "\n"
@@ -8,7 +10,9 @@
     ios_base::sync_with_stdio(false); \
     cin.tie(0);                       \
     cout.tie(0)
+
 using namespace std;
+#define debug(x) cout << #x << ": " << x << endl;
 
 const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
@@ -17,38 +21,39 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    ll n, k;
+    int n, k;
     cin >> n >> k;
-    // ll l = 1, r = n;
-    // 13 4
-    // 4 7 10 13 3 6 9 12 2 5 8 11 1
-    vector<ll> a(n, 0LL);
-    // fill even values
-    ll j = 0;
-    ll value = 1;
-    while (j < k)
+    vector<int> a(n);
+    map<int, int> freq;
+    for (int i = 0; i < n; i++)
     {
-        for (ll i = j; i < n; i += k)
+        cin >> a[i];
+        freq[a[i]]++;
+    }   
+
+    vector<int> frequencies;
+    for (auto &p : freq)
+    {
+        frequencies.push_back(p.second);
+    }
+    sort(frequencies.begin(), frequencies.end());
+
+    int unique = frequencies.size();
+
+    for (int f : frequencies)
+    {
+        if (k >= f)
         {
-            a[i] = value++;
+            k -= f;
+            unique--;
         }
-        j += 2;
-    }
-    j = 1;
-    value = n;
-    while (j < k)
-    {
-        for (ll i = j; i < n; i += k)
+        else
         {
-            a[i] = value--;
+            break;
         }
-        j += 2;
     }
-    for (auto &e : a)
-    {
-        cout << e << " ";
-    }
-    cout << endl;
+
+    cout << max(unique, 1) << endl;
 }
 
 signed main()

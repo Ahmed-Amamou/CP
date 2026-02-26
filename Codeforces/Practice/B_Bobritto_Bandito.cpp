@@ -1,3 +1,5 @@
+// Author: Ahmed Amamou
+
 #include <bits/stdc++.h>
 #define ll long long
 #define endl "\n"
@@ -8,7 +10,9 @@
     ios_base::sync_with_stdio(false); \
     cin.tie(0);                       \
     cout.tie(0)
+
 using namespace std;
+#define debug(x) cout << #x << ": " << x << endl;
 
 const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
@@ -17,38 +21,25 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    ll n, k;
-    cin >> n >> k;
-    // ll l = 1, r = n;
-    // 13 4
-    // 4 7 10 13 3 6 9 12 2 5 8 11 1
-    vector<ll> a(n, 0LL);
-    // fill even values
-    ll j = 0;
-    ll value = 1;
-    while (j < k)
+    int n, m, l, r;
+    cin >> n >> m >> l >> r;
+    ll minus = n - m;
+    ll newL = l;
+    ll newR = r;
+    while (minus > 0)
     {
-        for (ll i = j; i < n; i += k)
+        if (minus > 0 && newL < 0)
         {
-            a[i] = value++;
+            newL += 1;
+            minus -= 1;
         }
-        j += 2;
-    }
-    j = 1;
-    value = n;
-    while (j < k)
-    {
-        for (ll i = j; i < n; i += k)
+        if (minus > 0 && newR > 0)
         {
-            a[i] = value--;
+            newR -= 1;
+            minus -= 1;
         }
-        j += 2;
     }
-    for (auto &e : a)
-    {
-        cout << e << " ";
-    }
-    cout << endl;
+    cout << newL << " " << newR << endl;
 }
 
 signed main()

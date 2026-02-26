@@ -26,89 +26,53 @@ const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
 int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 int lcm(int a, int b) { return a * (b / gcd(a, b)); }
-
 void solve()
 {
-    ll n;
+    int n;
     cin >> n;
-    ll a[n], b[n];
+
+    vector<int> a(n), b(n);
     for (int i = 0; i < n; i++)
-    {
         cin >> a[i];
-    }
+    for (int i = 0; i < n; i++)
+        cin >> b[i];
+
+    vector<int> Asucc(2 * n + 1, 0), Bsucc(2 * n + 1, 0);
+
+    int count = 1;
     for (int i = 0; i < n; i++)
     {
-        cin >> b[i];
-    }
-    map<int, ll> mp1, mp2; // will store longuest equal sequence in array a;
-    ll count = 1;
-    for (int i = 1; i < n; i++)
-    {
-        if (a[i] == a[i - 1])
+        if (i > 0 && a[i] == a[i - 1])
         {
             count++;
         }
         else
         {
-            mp1[a[i - 1]] = max(count, mp1[a[i - 1]]);
             count = 1;
         }
+        Asucc[a[i]] = max(Asucc[a[i]], count);
     }
-    if (count == 1)
-    {
-        mp1[a[n - 1]] = max(count, mp2[a[n - 1]]);
-    }
-    else
-    {
-        mp1[a[n - 1]] = max(count, mp1[a[n - 1]]);
-    }
-    // for (auto it : mp1)
-    // {
-    //     cout << it.first << ": " << it.second << endl;
-    // }
     count = 1;
-    for (int i = 1; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
-        if (b[i] == b[i - 1])
+        if (i > 0 && b[i] == b[i - 1])
         {
             count++;
         }
         else
         {
-            mp2[b[i - 1]] = max(count, mp2[b[i - 1]]);
             count = 1;
         }
+        Bsucc[b[i]] = max(Bsucc[b[i]], count);
     }
-    if (count == 1)
+    int ans = 0;
+    for (int i = 1; i <= 2 * n; i++)
     {
-        mp2[b[n - 1]] = max(count, mp2[b[n - 1]]);
+        ans = max(ans, Asucc[i] + Bsucc[i]);
     }
-    else
-    {
-        mp2[b[n - 1]] = max(count, mp2[b[n - 1]]);
-    }
-    ll mx1 = 0, mx2 = 0;
-    for (auto it : mp2)
-    {
-        if (mp1.find(it.first) != mp1.end())
-        {
-            mp1[it.first] += it.second;
-        }
-        mx2 = max(mx2, it.second);
-    }
-    // cout << "-" << endl;
-    // for (auto it : mp1)
-    // {
-    //     cout << it.first << ": " << it.second << endl;
-    // }
-    for (auto it : mp1)
-    {
 
-        mx1 = max(mx1, it.second);
-    }
-    cout << max(mx1, mx2) << endl;
+    cout << ans << endl;
 }
-
 signed main()
 {
     FAST;

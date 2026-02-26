@@ -18,7 +18,9 @@
     ios_base::sync_with_stdio(false); \
     cin.tie(0);                       \
     cout.tie(0)
+
 using namespace std;
+#define debug(x) cout << #x << ": " << x << endl;
 
 const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
@@ -27,45 +29,28 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    while (true)
+    int n, k;
+    cin >> n >> k;
+    vector<int> a(n);
+    for (int i = 0; i < n; i++)
     {
-        string X, Y;
-        cin >> X >> Y;
-        if (X.empty() || Y.empty())
-        {
-            return;
-        }
 
-        vector<int> ans(X.size() * Y.size() + 1, 0);
-        for (int i = 0; i < X.size(); i++)
+        cin >> a[i];
+    }
+    for (int i = 0; i < k; i++)
+    {
+        ll x;
+        cin >> x;
+        ll low = -1, high = n;
+        while (high - low > 1)
         {
-            for (int j = 0; j < Y.size(); j++)
-            {
-                int x = X[X.size() - i - 1] - '0';
-                int y = Y[Y.size() - j - 1] - '0';
-                ans[i + j] += (x * y);
-            }
-        }
-        for (int i = 0; i < ans.size(); i++)
-        {
-            ans[i + 1] += ans[i] / 10;
-            ans[i] %= 10;
-        }
-
-        bool flag = false;
-        for (int i = ans.size() - 1; i >= 0; i--)
-        {
-            if (ans[i] == 0 && flag == false && i != 0)
-            {
-                continue;
-            }
+            ll mid = low + (high - low) / 2;
+            if (a[mid] <= x)
+                low = mid;
             else
-            {
-                flag = true;
-                cout << ans[i];
-            }
+                high = mid;
         }
-        cout << endl;
+        cout << low + 1 << endl;
     }
 }
 
@@ -74,8 +59,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    //   cin >> tt;
-    //   while (tt--)
-    solve();
+    // cin >> tt;
+    // while (tt--)
+        solve();
     return 0;
 }

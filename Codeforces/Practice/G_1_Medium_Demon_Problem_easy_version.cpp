@@ -1,146 +1,113 @@
-/*
- ▄▀▀▄ ▄▄   ▄▀▀█▄   ▄▀▀▄ ▄▀▄  ▄▀▀▀▀▄   ▄▀▀▀▀▄   ▄▀▀█▄▄
-█  █   ▄▀ ▐ ▄▀ ▀▄ █  █ ▀  █ █      █ █      █ █ ▄▀   █
-▐  █▄▄▄█    █▄▄▄█ ▐  █    █ █      █ █      █ ▐ █    █
-   █   █   ▄▀   █   █    █  ▀▄    ▄▀ ▀▄    ▄▀   █    █
-  ▄▀  ▄▀  █   ▄▀  ▄▀   ▄▀     ▀▀▀▀     ▀▀▀▀    ▄▀▄▄▄▄▀
- █   █    ▐   ▐   █    █                      █     ▐
- ▐   ▐            ▐    ▐                      ▐
-*/
-
 #include <bits/stdc++.h>
-#define ll long long
-#define endl "\n"
-#define F first
-#define double long double
-#define S second
-#define FAST                          \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(0);                       \
-    cout.tie(0)
-
 using namespace std;
-#define debug(x) cout << #x << ": " << x << endl;
 
-const double EPS = 0.00000001;
-const ll MOD = 1e9 + 7;
-int gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
-int lcm(int a, int b) { return a * (b / gcd(a, b)); }
-const ll MAXN = 200005;
+vector<int> r;
+vector<bool> visited;
+vector<int> component_id;
+vector<vector<int>> adj;
+vector<int> cycle_nodes;
 
-vector<ll> graph[MAXN];
-ll visited[MAXN], scc_id[MAXN], idx[MAXN], lowlink[MAXN];
-ll chain_length[MAXN]; 
-bool in_cycle[MAXN];
-stack<ll> st;
-ll timer = 0, scc_count = 0;
-
-void tarjan(ll u)
+int n;
+int max_distance;
+void dfs(int u, int parent, vector<int> &stack, vector<bool> &on_stack, int cid)
 {
-    idx[u] = lowlink[u] = ++timer;
-    visited[u] = 1;
-    st.push(u);
-
-    ll v = graph[u][0];
+    visited[u] = true;
+    component_id[u] = cid;
+    on_stack[u] = true;
+    stack.push_back(u);
+    int v = r[u];
     if (!visited[v])
     {
-        tarjan(v);
-        lowlink[u] = min(lowlink[u], lowlink[v]);
+        dfs(v, u, stack, on_stack, cid);
     }
-    else if (!scc_id[v])
+    else if (on_stack[v])
     {
-        lowlink[u] = min(lowlink[u], idx[v]);
-    }
-
-    if (idx[u] == lowlink[u])
-    { // Found SCC
-        ++scc_count;
-        ll node;
-        bool is_cycle = false;
-        vector<ll> members;
-
-        do
+        // Found a cycle
+        int cycle_start = -1;
+        for (int i = stack.size() - 1; i >= 0; --i)
         {
-            node = st.top();
-            st.pop();
-            scc_id[node] = scc_count;
-            members.push_back(node);
-        } while (node != u);
-
-        // Mark cycle nodes
-        if (members.size() > 1 || graph[members[0]][0] == members[0])
-        {
-            is_cycle = true;
-        }
-        for (ll x : members)
-            in_cycle[x] = is_cycle;
-    }
-}
-
-//using Memoization for a better complexity #blhy imchy yarhem bouk
-ll dfs_chain(ll u)
-{
-    if (in_cycle[u])
-        return 0;
-    if (chain_length[u] != -1)
-        return chain_length[u]; // Return cached result
-
-    ll v = graph[u][0];
-    return chain_length[u] = 1 + dfs_chain(v);
-}
-
-void solve()
-{
-    ll n;
-    cin >> n;
-
-    for (ll i = 1; i <= n; i++)
-    {
-        graph[i].clear();
-        visited[i] = scc_id[i] = idx[i] = lowlink[i] = 0;
-        chain_length[i] = -1; // Reset memoization array
-        in_cycle[i] = false;
-    }
-    while (!st.empty())
-        st.pop();
-    timer = scc_count = 0;
-
-    // Input edges
-    for (ll i = 1; i <= n; i++)
-    {
-        ll r;
-        cin >> r;
-        graph[i].push_back(r);
-    }
-
-    // Step 1: Find SCCs using Tarjan's Algorithm
-    for (ll i = 1; i <= n; i++)
-    {
-        if (!visited[i])
-            tarjan(i);
-    }
-
-    // Step 2: Calculate the longest chains leading into cycles
-    ll max_chain_length = 0;
-    for (ll i = 1; i <= n; i++)
-    {
-        if (!in_cycle[i])
-        { // Calculate chain length for nodes outside cycles
-            max_chain_length = max(max_chain_length, dfs_chain(i));
+            cycle_nodes.push_back(stack[i]);
+            if (stack[i] == v)
+                break;
         }
     }
-
-    // Result: longest chain + 2 (nodes in the cycle)
-    cout << max_chain_length + 2 << endl;
+    on_stack[u] = false;
+    stack.pop_back();
 }
 
-signed main()
+void bfs(int cid)
 {
-    FAST;
-    ll tt = 1;
-    // freopen("input.in", "r", stdin);
-    cin >> tt;
-    while (tt--)
-        solve();
+    queue<int> q;
+    vector<int> distance(n, -1);
+    for (int u : cycle_nodes)
+    {
+        distance[u] = 0;
+        q.push(u);
+    }
+    int max_dist = 0;
+    while (!q.empty())
+    {
+        int u = q.front();
+        q.pop();
+        for (int v : adj[u])
+        {
+            if (component_id[v] == cid && distance[v] == -1)
+            {
+                distance[v] = distance[u] + 1;
+                max_dist = max(max_dist, distance[v]);
+                q.push(v);
+            }
+        }
+    }
+    // Update global maximum distance
+    max_distance = max(max_distance, max_dist);
+}
+
+int main()
+{
+
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int t;
+    cin >> t;
+    for (int _ = 0; _ < t; ++_)
+    {
+        cin >> n;
+        r.resize(n);
+        for (int i = 0; i < n; ++i)
+        {
+            cin >> r[i];
+            r[i]--;
+        }
+        visited.resize(n, false);
+        component_id.resize(n, -1);
+        adj.resize(n);
+        for (int i = 0; i < n; ++i)
+        {
+            adj[i].push_back(r[i]);
+        }
+        int cid = 0;
+        max_distance = 0;
+        cycle_nodes.clear();
+        for (int u = 0; u < n; ++u)
+        {
+            if (!visited[u])
+            {
+                vector<int> stack;
+                vector<bool> on_stack(n, false);
+                dfs(u, -1, stack, on_stack, cid);
+                // Perform BFS from cycle_nodes
+                bfs(cid);
+                cid++;
+                cycle_nodes.clear();
+            }
+        }
+        cout << max_distance + 2 << endl;
+        // Clean up for next test case
+        r.clear();
+        visited.clear();
+        component_id.clear();
+        adj.clear();
+    }
     return 0;
 }

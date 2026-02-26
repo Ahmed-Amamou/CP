@@ -1,5 +1,43 @@
-Binary Search problem to solve:
-https://codeforces.com/contest/251/problem/A
-https://codeforces.com/contest/670/problem/D2
-https://codeforces.com/contest/1730/problem/B
-https://codeforces.com/contest/1707/problem/A
+chatbot RAG :
+
+    Approche RAG (Retrieval-Augmented Generation) :
+        Implémentation d'une approche RAG pour combiner les capacités génératives des modèles LLM avec des données spécifiques.
+        Utilisation d’un mécanisme de récupération basé sur des embeddings pour rechercher les informations pertinentes dans une base de connaissances avant de générer une réponse.
+
+    Préparation des données :
+        Division des documents en chunks pour une meilleure granularité et indexation efficace.
+        Enrichissement des chunks avec des métadonnées (source, auteur, date) afin d'inclure des références dans les réponses générées.
+
+    Gestion des embeddings :
+        Génération d'embeddings vectoriels pour les chunks à l'aide de modèles de langage avancés, permettant des recherches sémantiques précises.
+
+    Choix du modèle LLM :
+        Test de plusieurs modèles disponibles sur AWS Bedrock Playground pour évaluer les performances en termes de pertinence et de temps de réponse.
+        Sélection d’un modèle adapté aux besoins de l'application, équilibrant précision et coût.
+
+    Développement Backend :
+        Conception du backend en Python pour gérer la logique métier, les requêtes de recherche et les appels au modèle LLM.
+        Implémentation de l’application web avec le framework Django pour offrir une interface robuste et sécurisée.
+
+    Intégration et déploiement :
+        Développement d’une API RESTful pour connecter le frontend avec le backend et le pipeline RAG.
+        Mise en place de pipelines CI/CD pour un déploiement rapide et fiable des mises à jour.
+
+    Outils et technologies utilisés :
+        LangChain pour structurer les workflows de récupération et génération.
+        PostgreSQL comme base de données pour stocker les embeddings et les métadonnées.
+        OpenAI API pour les fonctionnalités LLM et NLP.
+
+
+En parallèle, je suis une personne autonome et un excellent résolveur de problèmes, comme en témoignent 
+ma participation à des dizaines de hackathons et de compétitions de programmation, aussi bien au niveau national qu’international. 
+Lors de certains événements, j’ai remporté des prix grâce à mes solutions innovantes et ma capacité à gérer des défis complexes sous pression. 
+J’ai également eu l’honneur de coordonner et de juger le plus grand événement organisé dans notre école : 
+un hackathon de 24 heures dédié à la résolution de problèmes. 
+J’étais responsable de la plateforme où les participants soumettaient leurs solutions, veillant à sa stabilité, 
+gérant les bugs critiques en temps réel et assurant le bon déroulement de l’événement.
+
+En parallèle, je travaille aussi très bien en équipe. Lors de nombreux projets académiques, comme le développement du chatbot ou 
+d’un système de recommandation, j’ai collaboré étroitement avec mes collègues pour concevoir et déployer des solutions fonctionnelles. 
+Ces expériences m’ont permis de combiner mes compétences techniques avec une forte aptitude à communiquer et à partager des idées, 
+renforçant ainsi la cohésion et la productivité au sein des équipes.

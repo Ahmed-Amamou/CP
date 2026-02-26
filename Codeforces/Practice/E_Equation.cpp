@@ -1,3 +1,5 @@
+// Author: Ahmed Amamou
+
 #include <bits/stdc++.h>
 #define ll long long
 #define endl "\n"
@@ -8,7 +10,9 @@
     ios_base::sync_with_stdio(false); \
     cin.tie(0);                       \
     cout.tie(0)
+
 using namespace std;
+#define debug(x) cout << #x << ": " << x << endl;
 
 const double EPS = 0.00000001;
 const ll MOD = 1e9 + 7;
@@ -17,38 +21,25 @@ int lcm(int a, int b) { return a * (b / gcd(a, b)); }
 
 void solve()
 {
-    ll n, k;
-    cin >> n >> k;
-    // ll l = 1, r = n;
-    // 13 4
-    // 4 7 10 13 3 6 9 12 2 5 8 11 1
-    vector<ll> a(n, 0LL);
-    // fill even values
-    ll j = 0;
-    ll value = 1;
-    while (j < k)
+    double c;
+    cin >> c;
+    double l = 0.0;
+    double r = 1e6 + 69;
+    auto ok = [&](double x) -> bool
     {
-        for (ll i = j; i < n; i += k)
+        return (x * x + sqrt(x)) >= c;
+    };
+    for (int i = 0; i < 69; i++)
+    {
+        double mid = l + (r - l) / 2;
+        if (ok(mid))
         {
-            a[i] = value++;
+            r = mid;
         }
-        j += 2;
+        else
+            l = mid;
     }
-    j = 1;
-    value = n;
-    while (j < k)
-    {
-        for (ll i = j; i < n; i += k)
-        {
-            a[i] = value--;
-        }
-        j += 2;
-    }
-    for (auto &e : a)
-    {
-        cout << e << " ";
-    }
-    cout << endl;
+    cout << setprecision(20) << r << endl;
 }
 
 signed main()
@@ -56,8 +47,8 @@ signed main()
     FAST;
     ll tt = 1;
     // freopen("input.in", "r", stdin);
-    cin >> tt;
-    while (tt--)
-        solve();
+    // cin >> tt;
+    // while (tt--)
+    solve();
     return 0;
 }
